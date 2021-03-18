@@ -5,7 +5,7 @@
   "scripts": {
     "generate:prisma": "prisma generate",
     "generate:codegen": "graphql-codegen",
-    "generate:nexus": "ts-node --transpile-only src/schema",
+    "generate:nexus": "ts-node --transpile-only --project tsconfig.nexus.json src/schema",
     "dev": "next dev",
     "build": "next build",
     "start": "next start"
