@@ -13,9 +13,12 @@
   "dependencies": {
     "@theme-ui/color": "^0.6.0-alpha.7",
     "next": "10.0.9",
+    "next-urql": "^3.0.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
-    "theme-ui": "^0.6.0-alpha.7"
+    "react-is": "^16.13.1",
+    "theme-ui": "^0.6.0-alpha.7",
+    "urql": "^2.0.1"
   },
   "devDependencies": {
     "@graphql-codegen/add": "^2.0.2",
