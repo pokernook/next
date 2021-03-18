@@ -1,7 +1,7 @@
 {
-  "name": "web-next",
-  "description": "Next.js port of the web repo",
-  "repository": "github:pokernook/web-next",
+  "name": "pokernook",
+  "description": "poker to relax/study to",
+  "repository": "github:pokernook/pokernook",
   "scripts": {
     "generate:prisma": "prisma generate",
     "generate:codegen": "graphql-codegen",
