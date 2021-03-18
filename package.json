@@ -3,6 +3,7 @@
   "description": "Next.js port of the web repo",
   "repository": "github:pokernook/web-next",
   "scripts": {
+    "prisma:generate": "prisma generate",
     "generate": "graphql-codegen -r dotenv/config",
     "dev:codegen": "npm run generate -- --watch",
     "dev:next": "next dev",
