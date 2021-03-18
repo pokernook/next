@@ -4,6 +4,8 @@ import { allow, nexusShield } from "nexus-shield";
 import { validatePlugin } from "nexus-validate";
 import { join } from "path";
 
+import * as types from "./types";
+
 export const schema = makeSchema({
   outputs: {
     schema: true,
@@ -31,5 +33,5 @@ export const schema = makeSchema({
       },
     ],
   },
-  types: null,
+  types,
 });
