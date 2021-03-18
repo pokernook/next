@@ -5,6 +5,7 @@
   "scripts": {
     "generate:prisma": "prisma generate",
     "generate:codegen": "graphql-codegen",
+    "generate:nexus": "ts-node --transpile-only src/schema",
     "dev": "next dev",
     "build": "next build",
     "start": "next start"
@@ -38,6 +39,7 @@
     "@types/react": "^17.0.3",
     "concurrently": "^6.0.0",
     "prisma": "2.18.0",
+    "ts-node": "^9.1.1",
     "typescript": "^4.2.3"
   }
 }
