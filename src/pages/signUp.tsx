@@ -10,43 +10,63 @@ import {
   Link as ThemeLink,
 } from "theme-ui";
 import Link from "next/link";
+import { useForm } from "react-hook-form";
 
-const SignUp = () => (
-  <Container sx={{ maxWidth: 325, pt: 20, textAlign: "center" }}>
-    <Image height={128} width={128} src="/logo.svg" mb={2} />
+const SignUp = () => {
+  const { register, handleSubmit } = useForm();
 
-    <Heading mb={3}>Create your account</Heading>
+  const onSubmit = handleSubmit((data) => console.log(data));
 
-    <Card>
-      <Box as="form">
-        <Field
-          label="Username"
-          name="username"
-          type="text"
-          spellCheck={false}
-          mb={2}
-        />
+  return (
+    <Container sx={{ maxWidth: 325, pt: 20, textAlign: "center" }}>
+      <Image height={128} width={128} src="/logo.svg" mb={2} />
 
-        <Field label="Email" name="email" type="email" mb={2} />
+      <Heading mb={3}>Create your account</Heading>
 
-        <Field label="Password" name="password" type="password" mb={3} />
+      <Card>
+        <Box as="form" onSubmit={onSubmit}>
+          <Field
+            label="Username"
+            name="username"
+            type="text"
+            spellCheck={false}
+            ref={register({ required: true })}
+            mb={2}
+          />
 
-        <Button type="submit" variant="primary">
-          Sign up for PokerNook
-        </Button>
-      </Box>
-    </Card>
+          <Field
+            label="Email"
+            name="email"
+            type="email"
+            ref={register({ required: true })}
+            mb={2}
+          />
 
-    <Card mt={3}>
-      <Text>
-        Been here before?{" "}
-        <Link href="/logIn" passHref>
-          <ThemeLink>Log in</ThemeLink>
-        </Link>
-        .
-      </Text>
-    </Card>
-  </Container>
-);
+          <Field
+            label="Password"
+            name="password"
+            type="password"
+            ref={register({ required: true })}
+            mb={3}
+          />
+
+          <Button type="submit" variant="primary">
+            Sign up for PokerNook
+          </Button>
+        </Box>
+      </Card>
+
+      <Card mt={3}>
+        <Text>
+          Been here before?{" "}
+          <Link href="/logIn" passHref>
+            <ThemeLink>Log in</ThemeLink>
+          </Link>
+          .
+        </Text>
+      </Card>
+    </Container>
+  );
+};
 
 export default SignUp;
