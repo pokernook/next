@@ -1,4 +1,4 @@
-schema: ${GRAPHQL_SCHEMA_PATH}
+schema: schema.graphql
 documents: src/**/*.graphql
 generates:
   src/graphql/types.ts:
