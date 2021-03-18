@@ -1,0 +1,14 @@
+mutation friendRequestSend($username: String!, $discriminator: Int!) {
+  friendRequestSend(username: $username, discriminator: $discriminator) {
+    createdAt
+    from {
+      ...userFields
+    }
+    id
+    status
+    to {
+      ...userFields
+    }
+    updatedAt
+  }
+}

@@ -1,0 +1,11 @@
+query friendships {
+  me {
+    id
+    friendships {
+      createdAt
+      users {
+        ...userFields
+      }
+    }
+  }
+}

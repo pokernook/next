@@ -3,7 +3,10 @@
   "description": "Next.js port of the web repo",
   "repository": "github:pokernook/web-next",
   "scripts": {
-    "dev": "next dev",
+    "generate": "graphql-codegen -r dotenv/config",
+    "dev:codegen": "npm run generate -- --watch",
+    "dev:next": "next dev",
+    "dev": "concurrently --kill-others npm:dev:*",
     "build": "next build",
     "start": "next start"
   },
@@ -15,8 +18,14 @@
     "theme-ui": "^0.6.0-alpha.7"
   },
   "devDependencies": {
+    "@graphql-codegen/add": "^2.0.2",
+    "@graphql-codegen/cli": "^1.21.3",
+    "@graphql-codegen/typescript": "^1.21.1",
+    "@graphql-codegen/typescript-operations": "^1.17.15",
+    "@graphql-codegen/typescript-urql": "^2.0.5",
     "@types/node": "^14.14.35",
     "@types/react": "^17.0.3",
+    "concurrently": "^6.0.0",
     "typescript": "^4.2.3"
   }
 }
