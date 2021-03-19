@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@prisma/client": "2.18.0",
-    "@theme-ui/color": "^0.6.0-alpha.7",
+    "@theme-ui/color": "^0.6.0-canary.1544.5359f8a1e408a4dfeb74a9ae39688270286e534a.0",
     "argon2": "^0.27.1",
     "emoji-regex": "^9.2.1",
     "fastify": "^3.14.0",
