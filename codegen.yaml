@@ -1,7 +1,7 @@
 schema: schema.graphql
 documents: src/**/*.graphql
 generates:
-  src/graphql/types.ts:
+  node_modules/@pokernook/graphql/index.ts:
     plugins:
       - add:
           content: |
