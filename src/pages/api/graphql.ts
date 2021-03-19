@@ -14,7 +14,7 @@ const build = async () => {
 
   await app.register(helmet);
   await app.register(mercurius, {
-    graphiql: isProduction ? false : "playground",
+    graphiql: isProduction ? false : "playground", // TODO: Playground is not usable
     path: "/api/graphql",
     schema,
   });

@@ -6,6 +6,7 @@ import { join } from "path";
 
 import * as types from "./types";
 
+// TODO: Context type is not available
 export const schema = makeSchema({
   outputs: {
     schema: true,
