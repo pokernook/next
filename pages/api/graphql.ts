@@ -1,4 +1,5 @@
 import Fastify, { HTTPMethods } from "fastify";
+import cookie from "fastify-cookie";
 import helmet from "fastify-helmet";
 import mercurius from "mercurius";
 import mercuriusCodegen from "mercurius-codegen";
@@ -14,6 +15,7 @@ const build = async () => {
   const app = Fastify();
 
   await app.register(helmet);
+  await app.register(cookie);
   await app.register(mercurius, {
     context: buildContext,
     graphiql: isProduction ? false : "playground", // TODO: Playground is not usable
