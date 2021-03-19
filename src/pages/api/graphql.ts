@@ -40,8 +40,10 @@ const apiHandler: NextApiHandler = async (req, res) => {
   });
 
   for (const key in headers) {
-    const header = headers[key]!;
-    res.setHeader(key, header);
+    const header = headers[key];
+    if (header) {
+      res.setHeader(key, header);
+    }
   }
 
   res.status(statusCode).end(body);
