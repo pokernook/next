@@ -1,0 +1,26 @@
+name: Generate
+
+on:
+  push:
+
+jobs:
+  graphql-schema:
+    name: GraphQL Schema
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2.1.5
+        with:
+          node-version: 15.x
+
+      - name: Reflect App
+        run: |
+          npm ci
+          npm run generate:prisma
+          npm run generate:nexus
+
+      - name: Commit Schema
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Generate GraphQL schema
