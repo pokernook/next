@@ -6,7 +6,7 @@ CREATE TABLE "User" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "discriminator" INTEGER NOT NULL,
     "email" TEXT NOT NULL,
-    "emailVerified" BOOLEAN NOT NULL DEFAULT false,
+    "emailVerified" TIMESTAMP(3),
     "id" TEXT NOT NULL,
     "passwordHash" TEXT NOT NULL,
     "username" TEXT NOT NULL,
