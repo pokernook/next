@@ -4,7 +4,6 @@
   "repository": "github:pokernook/pokernook",
   "scripts": {
     "generate:prisma": "prisma generate",
-    "generate:codegen": "graphql-codegen",
     "generate:nexus": "ts-node --transpile-only --project tsconfig.nexus.json src/schema",
     "dev": "next dev",
     "build": "next build",
@@ -36,11 +35,6 @@
     "yup": "^0.32.9"
   },
   "devDependencies": {
-    "@graphql-codegen/add": "^2.0.2",
-    "@graphql-codegen/cli": "^1.21.3",
-    "@graphql-codegen/typescript": "^1.21.1",
-    "@graphql-codegen/typescript-operations": "^1.17.15",
-    "@graphql-codegen/typescript-urql": "^2.0.5",
     "@types/node": "^14.14.35",
     "@types/react": "^17.0.3",
     "concurrently": "^6.0.0",
