@@ -47,8 +47,24 @@ input FriendshipWhereUniqueInput {
   id: String
 }
 
+type Mutation {
+  friendRequestAccept(friendRequestId: String!): FriendRequest
+  friendRequestReject(friendRequestId: String!): FriendRequest
+  friendRequestSend(discriminator: Int!, username: String!): FriendRequest
+  friendshipDelete(friendshipId: String!): Friendship
+  userDeleteAccount: User
+  userLogIn(email: EmailAddress!, password: String!): UserAuthPayload
+  userLogOut: UserLogOutPayload
+  userSignUp(email: EmailAddress!, password: String!, username: String!): UserAuthPayload
+  userStatusClear: UserStatus
+  userStatusSet(emoji: EmojiSingular, message: String): UserStatus
+  userUpdateEmail(newEmail: EmailAddress!, password: String!): User
+  userUpdatePassword(currentPassword: String!, newPassword: String!): User
+  userUpdateUsername(newUsername: String!): User
+}
+
 type Query {
-  ok: Boolean!
+  me: User
 }
 
 type User {
@@ -62,6 +78,15 @@ type User {
   id: String!
   status: UserStatus
   username: String!
+}
+
+type UserAuthPayload {
+  user: User
+}
+
+type UserLogOutPayload {
+  sessionId: String
+  user: User
 }
 
 type UserStatus {
