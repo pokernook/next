@@ -9,31 +9,43 @@ import {
   queryField,
   stringArg,
 } from "nexus";
+import { User } from "nexus-prisma";
 import { promisify } from "util";
 
 import { isAuthenticated } from "../rules";
-import { EmailAddress } from "./Scalars";
 
-export const User = objectType({
-  name: "User",
+export const UserObject = objectType({
+  name: User.$name,
   definition(t) {
-    t.model.createdAt();
-    t.model.discriminator();
-    t.model.email();
-    t.model.emailVerified();
-    t.model.friendships();
-    t.model.friendRequestsReceived();
-    t.model.friendRequestsSent();
-    t.model.id();
-    t.model.status();
-    t.model.username();
+    t.field(User.createdAt.name, { type: User.createdAt.type });
+    t.field(User.discriminator.name, { type: User.discriminator.type });
+    t.field(User.email.name, { type: User.email.type });
+    t.field(User.emailVerified.name, { type: User.emailVerified.type });
+    t.nonNull.list.nonNull.field("friendships", {
+      type: "Friendship",
+      resolve: () => null, // TODO: implement friendships resolver
+    });
+    t.nonNull.list.nonNull.field("friendRequestsReceived", {
+      type: "FriendRequest",
+      resolve: () => null, // TODO: implement friend requests received resolver
+    });
+    t.nonNull.list.nonNull.field("friendRequestsSent", {
+      type: "FriendRequest",
+      resolve: () => null, // TODO: implement friend requests received resolver
+    });
+    t.field(User.id.name, { type: User.id.type });
+    t.field("status", {
+      type: "UserStatus",
+      resolve: () => null, // TODO: implement user status resolver
+    });
+    t.field(User.username.name, { type: User.username.type });
   },
 });
 
 export const UserAuthPayload = objectType({
   name: "UserAuthPayload",
   definition(t) {
-    t.field("user", { type: User });
+    t.field("user", { type: "User" });
   },
 });
 
@@ -41,19 +53,19 @@ export const UserLogOutPayload = objectType({
   name: "UserLogOutPayload",
   definition(t) {
     t.string("sessionId");
-    t.field("user", { type: User });
+    t.field("user", { type: "User" });
   },
 });
 
 export const me = queryField("me", {
-  type: User,
+  type: "User",
   resolve: (_root, _args, ctx) => ctx.user,
 });
 
 export const userSignUp = mutationField("userSignUp", {
   type: UserAuthPayload,
   args: {
-    email: nonNull(arg({ type: EmailAddress })),
+    email: nonNull(arg({ type: "EmailAddress" })),
     username: nonNull(stringArg()),
     password: nonNull(stringArg()),
   },
@@ -78,7 +90,7 @@ export const userSignUp = mutationField("userSignUp", {
 export const userLogIn = mutationField("userLogIn", {
   type: UserAuthPayload,
   args: {
-    email: nonNull(arg({ type: EmailAddress })),
+    email: nonNull(arg({ type: "EmailAddress" })),
     password: nonNull(stringArg()),
   },
   resolve: async (_root, { email, password }, ctx) => {
@@ -114,7 +126,7 @@ export const userLogOut = mutationField("userLogOut", {
 });
 
 export const userUpdateUsername = mutationField("userUpdateUsername", {
-  type: User,
+  type: "User",
   shield: isAuthenticated(),
   args: { newUsername: nonNull(stringArg()) },
   validate: ({ string }) => ({
@@ -145,7 +157,7 @@ export const userUpdateUsername = mutationField("userUpdateUsername", {
 });
 
 export const userUpdatePassword = mutationField("userUpdatePassword", {
-  type: User,
+  type: "User",
   shield: isAuthenticated(),
   args: {
     currentPassword: nonNull(stringArg()),
@@ -173,11 +185,11 @@ export const userUpdatePassword = mutationField("userUpdatePassword", {
 });
 
 export const userUpdateEmail = mutationField("userUpdateEmail", {
-  type: User,
+  type: "User",
   shield: isAuthenticated(),
   args: {
     password: nonNull(stringArg()),
-    newEmail: nonNull(arg({ type: EmailAddress })),
+    newEmail: nonNull(arg({ type: "EmailAddress" })),
   },
   resolve: async (_root, { password, newEmail }, ctx) => {
     if (!ctx.user) {
@@ -199,7 +211,7 @@ export const userUpdateEmail = mutationField("userUpdateEmail", {
 });
 
 export const userDeleteAccount = mutationField("userDeleteAccount", {
-  type: User,
+  type: "User",
   shield: isAuthenticated(),
   resolve: async (_root, _args, ctx) => {
     const deletedUser = await ctx.prisma.user.delete({

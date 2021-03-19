@@ -1,21 +1,41 @@
-import { intArg, mutationField, nonNull, objectType, stringArg } from "nexus";
+import {
+  enumType,
+  intArg,
+  mutationField,
+  nonNull,
+  objectType,
+  stringArg,
+} from "nexus";
+import { FriendRequest, FriendRequestStatus } from "nexus-prisma";
 
 import { isAuthenticated } from "../rules";
 
-export const FriendRequest = objectType({
-  name: "FriendRequest",
+export const FriendRequestStatusEnum = enumType(FriendRequestStatus);
+
+export const FriendRequestObject = objectType({
+  name: FriendRequest.$name,
   definition(t) {
-    t.model.createdAt();
-    t.model.from();
-    t.model.id();
-    t.model.status();
-    t.model.to();
-    t.model.updatedAt();
+    t.field(FriendRequest.createdAt.name, {
+      type: FriendRequest.createdAt.type,
+    });
+    t.nonNull.field("from", {
+      type: "User",
+      resolve: () => null, // TODO: implement from resolver
+    });
+    t.field(FriendRequest.id.name, { type: FriendRequest.id.type });
+    t.field(FriendRequest.status.name, { type: FriendRequest.status.type });
+    t.nonNull.field("to", {
+      type: "User",
+      resolve: () => null,
+    }); // TODO: implement to resolver
+    t.field(FriendRequest.updatedAt.name, {
+      type: FriendRequest.updatedAt.type,
+    });
   },
 });
 
 export const friendRequestSend = mutationField("friendRequestSend", {
-  type: FriendRequest,
+  type: "FriendRequest",
   shield: isAuthenticated(),
   args: {
     username: nonNull(stringArg()),
@@ -47,7 +67,7 @@ export const friendRequestSend = mutationField("friendRequestSend", {
 });
 
 export const friendRequestAccept = mutationField("friendRequestAccept", {
-  type: FriendRequest,
+  type: "FriendRequest",
   shield: isAuthenticated(),
   args: { friendRequestId: nonNull(stringArg()) },
   resolve: async (_root, { friendRequestId }, ctx) => {
@@ -81,7 +101,7 @@ export const friendRequestAccept = mutationField("friendRequestAccept", {
 });
 
 export const friendRequestReject = mutationField("friendRequestReject", {
-  type: FriendRequest,
+  type: "FriendRequest",
   shield: isAuthenticated(),
   args: { friendRequestId: nonNull(stringArg()) },
   resolve: async (_root, { friendRequestId }, ctx) => {

@@ -1,25 +1,28 @@
 import { arg, mutationField, objectType, stringArg } from "nexus";
+import { UserStatus } from "nexus-prisma";
 
 import { isAuthenticated } from "../rules";
-import { EmojiSingular } from "./Scalars";
 
-export const UserStatus = objectType({
-  name: "UserStatus",
+export const UserStatusObject = objectType({
+  name: UserStatus.$name,
   definition(t) {
-    t.model.createdAt();
-    t.model.emoji();
-    t.model.id();
-    t.model.message();
-    t.model.updatedAt();
-    t.model.user();
+    t.field(UserStatus.createdAt.name, { type: UserStatus.createdAt.type });
+    t.field(UserStatus.emoji.name, { type: UserStatus.emoji.type });
+    t.field(UserStatus.id.name, { type: UserStatus.id.type });
+    t.field(UserStatus.message.name, { type: UserStatus.message.type });
+    t.field(UserStatus.updatedAt.name, { type: UserStatus.updatedAt.type });
+    t.nonNull.field("user", {
+      type: "User",
+      resolve: () => null, // TODO: implement user resolver
+    });
   },
 });
 
 export const userStatusSet = mutationField("userStatusSet", {
-  type: UserStatus,
+  type: "UserStatus",
   shield: isAuthenticated(),
   args: {
-    emoji: arg({ type: EmojiSingular }),
+    emoji: arg({ type: "EmojiSingular" }),
     message: stringArg(),
   },
   validate: ({ string }) => ({
@@ -43,7 +46,7 @@ export const userStatusSet = mutationField("userStatusSet", {
 });
 
 export const userStatusClear = mutationField("userStatusClear", {
-  type: UserStatus,
+  type: "UserStatus",
   shield: isAuthenticated(),
   resolve: async (_root, _args, ctx) => {
     const userWithStatus = await ctx.prisma.user.findUnique({

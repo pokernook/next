@@ -2,6 +2,9 @@
 ### Do not make changes to this file directly
 
 
+"""
+A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+"""
 scalar DateTime
 
 """
@@ -15,15 +18,10 @@ scalar EmojiSingular
 type FriendRequest {
   createdAt: DateTime!
   from: User!
-  id: String!
+  id: ID!
   status: FriendRequestStatus!
   to: User!
   updatedAt: DateTime!
-}
-
-input FriendRequestFromIdToIdCompoundUniqueInput {
-  fromId: String!
-  toId: String!
 }
 
 enum FriendRequestStatus {
@@ -32,20 +30,16 @@ enum FriendRequestStatus {
   REJECTED
 }
 
-input FriendRequestWhereUniqueInput {
-  fromId_toId: FriendRequestFromIdToIdCompoundUniqueInput
-  id: String
-}
-
 type Friendship {
   createdAt: DateTime!
-  id: String!
-  users(cursor: UserWhereUniqueInput, skip: Int, take: Int): [User!]!
+  id: ID!
+  users: [User!]!
 }
 
-input FriendshipWhereUniqueInput {
-  id: String
-}
+"""
+The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar Json
 
 type Mutation {
   friendRequestAccept(friendRequestId: String!): FriendRequest
@@ -72,10 +66,10 @@ type User {
   discriminator: Int!
   email: String!
   emailVerified: Boolean!
-  friendRequestsReceived(cursor: FriendRequestWhereUniqueInput, skip: Int, take: Int): [FriendRequest!]!
-  friendRequestsSent(cursor: FriendRequestWhereUniqueInput, skip: Int, take: Int): [FriendRequest!]!
-  friendships(cursor: FriendshipWhereUniqueInput, skip: Int, take: Int): [Friendship!]!
-  id: String!
+  friendRequestsReceived: [FriendRequest!]!
+  friendRequestsSent: [FriendRequest!]!
+  friendships: [Friendship!]!
+  id: ID!
   status: UserStatus
   username: String!
 }
@@ -92,19 +86,8 @@ type UserLogOutPayload {
 type UserStatus {
   createdAt: DateTime!
   emoji: String
-  id: String!
+  id: ID!
   message: String
   updatedAt: DateTime!
-  user: User
-}
-
-input UserTagCompoundUniqueInput {
-  discriminator: Int!
-  username: String!
-}
-
-input UserWhereUniqueInput {
-  Tag: UserTagCompoundUniqueInput
-  email: String
-  id: String
+  user: User!
 }
