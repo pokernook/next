@@ -65,7 +65,7 @@ type User {
   createdAt: DateTime!
   discriminator: Int!
   email: String!
-  emailVerified: Boolean!
+  emailVerified: DateTime
   friendRequestsReceived: [FriendRequest!]!
   friendRequestsSent: [FriendRequest!]!
   friendships: [Friendship!]!
