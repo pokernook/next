@@ -1,17 +1,28 @@
 import Fastify, { HTTPMethods } from "fastify";
 import helmet from "fastify-helmet";
 import mercurius from "mercurius";
+import mercuriusCodegen from "mercurius-codegen";
 import { NextApiHandler } from "next";
+import { join } from "path";
 
 import { schema } from "../../schema";
+
+const isProduction = process.env.NODE_ENV === "production";
 
 const build = async () => {
   const app = Fastify();
 
   await app.register(helmet);
   await app.register(mercurius, {
+    graphiql: isProduction ? false : "playground",
     path: "/api/graphql",
     schema,
+  });
+
+  mercuriusCodegen(app, {
+    targetPath: join(process.cwd(), "node_modules/@pokernook/graphql/index.ts"),
+    operationsGlob: "../../graphql/**/*.graphql",
+    watchOptions: { enabled: !isProduction },
   });
 
   return app;
