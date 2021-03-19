@@ -10,8 +10,8 @@ export const schema = makeSchema({
   outputs: {
     schema: true,
     typegen: join(
-      __dirname,
-      "../../node_modules/@types/nexus-typegen/index.d.ts"
+      process.cwd(),
+      "node_modules/@types/nexus-typegen/index.d.ts"
     ),
   },
   plugins: [
@@ -25,13 +25,5 @@ export const schema = makeSchema({
     }),
     validatePlugin(),
   ],
-  sourceTypes: {
-    modules: [
-      {
-        alias: "prisma",
-        module: require.resolve(".prisma/client/index.d.ts"),
-      },
-    ],
-  },
   types,
 });
