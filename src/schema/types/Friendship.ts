@@ -1,18 +1,23 @@
 import { mutationField, nonNull, objectType, stringArg } from "nexus";
+import { Friendship } from "nexus-prisma";
 
 import { isAuthenticated } from "../rules";
+import { User } from "./User";
 
-export const Friendship = objectType({
-  name: "Friendship",
+export const FriendshipObject = objectType({
+  name: Friendship.$name,
   definition(t) {
-    t.model.createdAt();
-    t.model.id();
-    t.model.users();
+    t.field(Friendship.createdAt.name, { type: Friendship.createdAt.type });
+    t.field(Friendship.id.name, { type: Friendship.id.type });
+    t.nonNull.list.nonNull.field("users", {
+      type: User,
+      resolve: () => null, // TODO: implement users resolver
+    });
   },
 });
 
 export const friendshipDelete = mutationField("friendshipDelete", {
-  type: Friendship,
+  type: FriendshipObject,
   shield: isAuthenticated(),
   args: { friendshipId: nonNull(stringArg()) },
   resolve: async (_root, { friendshipId }, ctx) => {
