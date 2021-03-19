@@ -1,4 +1,4 @@
-import { objectType, mutationField, nonNull, stringArg } from "nexus";
+import { mutationField, nonNull, objectType, stringArg } from "nexus";
 
 import { isAuthenticated } from "../rules";
 

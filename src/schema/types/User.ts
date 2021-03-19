@@ -2,12 +2,12 @@ import { PrismaClient } from "@prisma/client";
 import { argon2id, hash, verify } from "argon2";
 import { randomInt } from "crypto";
 import {
-  objectType,
-  queryField,
+  arg,
   mutationField,
   nonNull,
+  objectType,
+  queryField,
   stringArg,
-  arg,
 } from "nexus";
 import { promisify } from "util";
 

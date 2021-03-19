@@ -1,4 +1,4 @@
-import { objectType, mutationField, arg, stringArg } from "nexus";
+import { arg, mutationField, objectType, stringArg } from "nexus";
 
 import { isAuthenticated } from "../rules";
 import { EmojiSingular } from "./Scalars";

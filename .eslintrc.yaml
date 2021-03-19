@@ -19,6 +19,7 @@ rules:
   simple-import-sort/imports: "error"
   simple-import-sort/exports: "error"
   sort-imports: "off"
+  react/react-in-jsx-scope: "off"
 
 settings:
   react:

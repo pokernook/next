@@ -19,7 +19,7 @@ const build = async () => {
     schema,
   });
 
-  mercuriusCodegen(app, {
+  await mercuriusCodegen(app, {
     targetPath: join(process.cwd(), "node_modules/@pokernook/graphql/index.ts"),
     operationsGlob: "../../graphql/**/*.graphql",
     watchOptions: { enabled: !isProduction },
