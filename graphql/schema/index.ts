@@ -5,8 +5,11 @@ import { join } from "path";
 
 import * as types from "./types";
 
-// TODO: Context type is not available
 export const schema = makeSchema({
+  contextType: {
+    export: "Context",
+    module: join(process.cwd(), "graphql/context.ts"),
+  },
   outputs: {
     schema: true,
     typegen: join(
