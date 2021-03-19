@@ -1,0 +1,25 @@
+parser: "@typescript-eslint/parser"
+
+parserOptions:
+  ecmaVersion: 2021
+  project: tsconfig.json
+  sourceType: module
+
+plugins:
+  - simple-import-sort
+
+extends:
+  - eslint:recommended
+  - plugin:react/recommended
+  - plugin:@typescript-eslint/recommended
+  - plugin:@typescript-eslint/recommended-requiring-type-checking
+  - plugin:prettier/recommended
+
+rules:
+  simple-import-sort/imports: "error"
+  simple-import-sort/exports: "error"
+  sort-imports: "off"
+
+settings:
+  react:
+    version: detect
