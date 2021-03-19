@@ -5,7 +5,7 @@ import mercuriusCodegen from "mercurius-codegen";
 import { NextApiHandler } from "next";
 import { join } from "path";
 
-import { schema } from "../../schema";
+import { schema } from "../../graphql/schema";
 
 const isProduction = process.env.NODE_ENV === "production";
 
@@ -21,7 +21,7 @@ const build = async () => {
 
   await mercuriusCodegen(app, {
     targetPath: join(process.cwd(), "node_modules/@pokernook/graphql/index.ts"),
-    operationsGlob: "../../graphql/**/*.graphql",
+    operationsGlob: "../../graphql/operations/**/*.graphql",
     watchOptions: { enabled: !isProduction },
   });
 
