@@ -1,4 +1,6 @@
+import Image from "next/image";
 import Link from "next/link";
+import { withUrqlClient } from "next-urql";
 import { useForm } from "react-hook-form";
 import {
   Box,
@@ -7,19 +9,25 @@ import {
   Container,
   Field,
   Heading,
-  Image,
   Link as ThemeLink,
   Text,
 } from "theme-ui";
+import { useMutation } from "urql";
+
+import { logInDocument, logInMutationVariables } from "../generated/graphql";
+import { getClientConfig } from "../graphql/client";
 
 const LogIn = (): JSX.Element => {
-  const { register, handleSubmit } = useForm();
+  // TODO: Fix ESLint error
+  // eslint-disable-next-line
+  const { register, handleSubmit } = useForm<logInMutationVariables>();
+  const [, logIn] = useMutation(logInDocument);
 
-  const onSubmit = handleSubmit((data) => console.log(data));
+  const onSubmit = handleSubmit((data) => logIn(data));
 
   return (
     <Container sx={{ maxWidth: 325, pt: 20, textAlign: "center" }}>
-      <Image height={128} width={128} src="/logo.svg" mb={2} />
+      <Image height={128} width={128} src="/logo.svg" />
 
       <Heading mb={3}>Enter the &apos;Nook</Heading>
 
@@ -58,4 +66,4 @@ const LogIn = (): JSX.Element => {
   );
 };
 
-export default LogIn;
+export default withUrqlClient(getClientConfig)(LogIn);
