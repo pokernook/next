@@ -49,7 +49,6 @@ const build = async () => {
   await mercuriusCodegen(app, {
     targetPath: join(process.cwd(), "graphql/types.ts"),
     operationsGlob: join(process.cwd(), "graphql/operations/**/*.graphql"),
-    watchOptions: { enabled: !IS_PRODUCTION },
   });
 
   return app;
