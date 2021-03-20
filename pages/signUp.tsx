@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { withUrqlClient } from "next-urql";
 import { FC } from "react";
@@ -8,7 +7,6 @@ import {
   Box,
   Button,
   Card,
-  Container,
   Field,
   Heading,
   Link as ThemeLink,
@@ -16,6 +14,7 @@ import {
 } from "theme-ui";
 
 import { FadeIn } from "../components/Animated";
+import { AuthLayout } from "../components/AuthLayout";
 import { getClientConfig } from "../graphql/client";
 import { SignUpMutationVariables, useSignUpMutation } from "../graphql/types";
 
@@ -28,9 +27,7 @@ const SignUp: FC = () => {
   const onSubmit = handleSubmit((data) => signUp(data));
 
   return (
-    <Container sx={{ maxWidth: 325, pt: 20, textAlign: "center" }}>
-      <Image height={128} width={128} src="/logo.svg" />
-
+    <AuthLayout>
       <Heading mb={3}>Create your account</Heading>
 
       {signUpResult.error && (
@@ -88,7 +85,7 @@ const SignUp: FC = () => {
           .
         </Text>
       </Card>
-    </Container>
+    </AuthLayout>
   );
 };
 
