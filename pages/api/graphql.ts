@@ -2,6 +2,7 @@ import Fastify, { HTTPMethods } from "fastify";
 import cookie from "fastify-cookie";
 import helmet from "fastify-helmet";
 import redis from "fastify-redis";
+import session from "fastify-session";
 import mercurius from "mercurius";
 import mercuriusCodegen from "mercurius-codegen";
 import { NextApiHandler } from "next";
@@ -10,6 +11,13 @@ import { join } from "path";
 import { buildContext } from "../../graphql/context";
 import { schema } from "../../graphql/schema";
 
+declare module "fastify" {
+  interface Session {
+    userId: string;
+  }
+}
+
+const APP_SECRET = process.env.APP_SECRET || "";
 const IS_PRODUCTION = process.env.NODE_ENV === "production";
 const REDIS_URL = process.env.REDIS_URL || "";
 
@@ -19,6 +27,17 @@ const build = async () => {
   await app.register(helmet);
   await app.register(cookie);
   await app.register(redis, { url: REDIS_URL });
+  await app.register(session, {
+    cookie: {
+      httpOnly: true,
+      maxAge: 30 * 24 * 60 * 60 * 1_000, // 30 days,
+      sameSite: true,
+      secure: IS_PRODUCTION,
+    },
+    cookieName: "user_session",
+    saveUninitialized: false,
+    secret: APP_SECRET,
+  });
   await app.register(mercurius, {
     context: buildContext,
     graphiql: IS_PRODUCTION ? false : "playground", // TODO: Playground is not usable
