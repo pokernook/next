@@ -18,16 +18,20 @@ export const FriendRequestObject = objectType({
     t.field(FriendRequest.createdAt.name, {
       type: FriendRequest.createdAt.type,
     });
-    t.nonNull.field("from", {
+    t.field("from", {
       type: "User",
-      resolve: () => null, // TODO: implement from resolver
+      resolve: (parent, _args, ctx) =>
+        ctx.prisma.friendRequest
+          .findUnique({ where: { id: parent.id } })
+          .from(),
     });
     t.field(FriendRequest.id.name, { type: FriendRequest.id.type });
     t.field(FriendRequest.status.name, { type: FriendRequest.status.type });
-    t.nonNull.field("to", {
+    t.field("to", {
       type: "User",
-      resolve: () => null,
-    }); // TODO: implement to resolver
+      resolve: (parent, _args, ctx) =>
+        ctx.prisma.friendRequest.findUnique({ where: { id: parent.id } }).to(),
+    });
     t.field(FriendRequest.updatedAt.name, {
       type: FriendRequest.updatedAt.type,
     });

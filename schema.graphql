@@ -17,10 +17,10 @@ scalar EmojiSingular
 
 type FriendRequest {
   createdAt: DateTime!
-  from: User!
+  from: User
   id: ID!
   status: FriendRequestStatus!
-  to: User!
+  to: User
   updatedAt: DateTime!
 }
 
