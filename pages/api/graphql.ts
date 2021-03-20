@@ -18,7 +18,7 @@ declare module "fastify" {
   }
 }
 
-const APP_SECRET = process.env.APP_SECRET || "";
+const SESSION_SECRET = process.env.SESSION_SECRET || "";
 const IS_PRODUCTION = process.env.NODE_ENV === "production";
 const REDIS_URL = process.env.REDIS_URL || "";
 
@@ -37,7 +37,7 @@ const build = async () => {
     },
     cookieName: "user_session",
     saveUninitialized: false,
-    secret: APP_SECRET,
+    secret: SESSION_SECRET,
     store: new RedisStore({ client: app.redis }),
   });
   await app.register(mercurius, {
