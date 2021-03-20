@@ -662,26 +662,6 @@ export type userFieldsFragment = { __typename?: "User" } & Pick<
     >;
   };
 
-export type friendshipsQueryVariables = Exact<{ [key: string]: never }>;
-
-export type friendshipsQuery = { __typename?: "Query" } & {
-  me?: Maybe<
-    { __typename?: "User" } & Pick<User, "id"> & {
-        friendships: Array<
-          { __typename?: "Friendship" } & Pick<Friendship, "createdAt"> & {
-              users: Array<{ __typename?: "User" } & userFieldsFragment>;
-            }
-        >;
-      }
-  >;
-};
-
-export type meQueryVariables = Exact<{ [key: string]: never }>;
-
-export type meQuery = { __typename?: "Query" } & {
-  me?: Maybe<{ __typename?: "User" } & userFieldsFragment>;
-};
-
 export type deleteAccountMutationVariables = Exact<{ [key: string]: never }>;
 
 export type deleteAccountMutation = { __typename?: "Mutation" } & {
@@ -788,6 +768,26 @@ export type updateUsernameMutation = { __typename?: "Mutation" } & {
   userUpdateUsername?: Maybe<{ __typename?: "User" } & userFieldsFragment>;
 };
 
+export type friendshipsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type friendshipsQuery = { __typename?: "Query" } & {
+  me?: Maybe<
+    { __typename?: "User" } & Pick<User, "id"> & {
+        friendships: Array<
+          { __typename?: "Friendship" } & Pick<Friendship, "createdAt"> & {
+              users: Array<{ __typename?: "User" } & userFieldsFragment>;
+            }
+        >;
+      }
+  >;
+};
+
+export type meQueryVariables = Exact<{ [key: string]: never }>;
+
+export type meQuery = { __typename?: "Query" } & {
+  me?: Maybe<{ __typename?: "User" } & userFieldsFragment>;
+};
+
 export const userFieldsFragmentDoc: DocumentNode<
   userFieldsFragment,
   unknown
@@ -825,90 +825,6 @@ export const userFieldsFragmentDoc: DocumentNode<
         ],
       },
     },
-  ],
-};
-export const friendshipsDocument: DocumentNode<
-  friendshipsQuery,
-  friendshipsQueryVariables
-> = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "query",
-      name: { kind: "Name", value: "friendships" },
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "me" },
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                { kind: "Field", name: { kind: "Name", value: "id" } },
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "friendships" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "createdAt" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "users" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "FragmentSpread",
-                              name: { kind: "Name", value: "userFields" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-    ...userFieldsFragmentDoc.definitions,
-  ],
-};
-export const meDocument: DocumentNode<meQuery, meQueryVariables> = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "query",
-      name: { kind: "Name", value: "me" },
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "me" },
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                {
-                  kind: "FragmentSpread",
-                  name: { kind: "Name", value: "userFields" },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-    ...userFieldsFragmentDoc.definitions,
   ],
 };
 export const deleteAccountDocument: DocumentNode<
@@ -1589,6 +1505,90 @@ export const updateUsernameDocument: DocumentNode<
                 },
               },
             ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "FragmentSpread",
+                  name: { kind: "Name", value: "userFields" },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    ...userFieldsFragmentDoc.definitions,
+  ],
+};
+export const friendshipsDocument: DocumentNode<
+  friendshipsQuery,
+  friendshipsQueryVariables
+> = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "friendships" },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "me" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "friendships" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "createdAt" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "users" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "FragmentSpread",
+                              name: { kind: "Name", value: "userFields" },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    ...userFieldsFragmentDoc.definitions,
+  ],
+};
+export const meDocument: DocumentNode<meQuery, meQueryVariables> = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "me" },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "me" },
             selectionSet: {
               kind: "SelectionSet",
               selections: [
