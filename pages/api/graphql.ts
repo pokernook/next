@@ -10,6 +10,7 @@ import { join } from "path";
 
 import { buildContext } from "../../graphql/context";
 import { schema } from "../../graphql/schema";
+import { RedisStore } from "../../utils/redis-store";
 
 declare module "fastify" {
   interface Session {
@@ -37,6 +38,7 @@ const build = async () => {
     cookieName: "user_session",
     saveUninitialized: false,
     secret: APP_SECRET,
+    store: new RedisStore({ client: app.redis }),
   });
   await app.register(mercurius, {
     context: buildContext,
