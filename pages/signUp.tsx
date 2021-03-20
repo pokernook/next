@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import {
@@ -8,6 +7,7 @@ import {
   Container,
   Field,
   Heading,
+  Image,
   Link as ThemeLink,
   Text,
 } from "theme-ui";

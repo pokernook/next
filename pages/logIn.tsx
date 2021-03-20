@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { withUrqlClient } from "next-urql";
 import { useForm } from "react-hook-form";
@@ -9,6 +8,7 @@ import {
   Container,
   Field,
   Heading,
+  Image,
   Link as ThemeLink,
   Text,
 } from "theme-ui";
