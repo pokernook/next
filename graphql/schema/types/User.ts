@@ -23,20 +23,28 @@ export const UserObject = objectType({
     t.field(User.emailVerified.name, { type: User.emailVerified.type });
     t.nonNull.list.nonNull.field("friendships", {
       type: "Friendship",
-      resolve: () => null, // TODO: implement friendships resolver
+      resolve: (parent, _args, ctx) =>
+        ctx.prisma.user.findUnique({ where: { id: parent.id } }).friendships(),
     });
     t.nonNull.list.nonNull.field("friendRequestsReceived", {
       type: "FriendRequest",
-      resolve: () => null, // TODO: implement friend requests received resolver
+      resolve: (parent, _args, ctx) =>
+        ctx.prisma.user
+          .findUnique({ where: { id: parent.id } })
+          .friendRequestsReceived(),
     });
     t.nonNull.list.nonNull.field("friendRequestsSent", {
       type: "FriendRequest",
-      resolve: () => null, // TODO: implement friend requests received resolver
+      resolve: (parent, _args, ctx) =>
+        ctx.prisma.user
+          .findUnique({ where: { id: parent.id } })
+          .friendRequestsSent(),
     });
     t.field(User.id.name, { type: User.id.type });
     t.field("status", {
       type: "UserStatus",
-      resolve: () => null, // TODO: implement user status resolver
+      resolve: (parent, _args, ctx) =>
+        ctx.prisma.user.findUnique({ where: { id: parent.id } }).status(),
     });
     t.field(User.username.name, { type: User.username.type });
   },
@@ -204,7 +212,7 @@ export const userUpdateEmail = mutationField("userUpdateEmail", {
     }
     const updatedUser = await ctx.prisma.user.update({
       where: { id: ctx.user.id },
-      data: { email: newEmail, emailVerified: false },
+      data: { email: newEmail, emailVerified: null },
     });
     return updatedUser;
   },
