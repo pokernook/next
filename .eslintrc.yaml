@@ -27,3 +27,7 @@ rules:
 settings:
   react:
     version: detect
+
+ignorePatterns:
+  - "/generated"
+  - next.config.js
