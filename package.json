@@ -1,6 +1,6 @@
 {
   "name": "pokernook",
-  "description": "poker to relax/study to",
+  "description": "Next.js web app and GraphQL API",
   "repository": "github:pokernook/pokernook",
   "scripts": {
     "generate:prisma": "prisma generate",
