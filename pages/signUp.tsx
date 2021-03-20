@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import {
@@ -7,19 +8,20 @@ import {
   Container,
   Field,
   Heading,
-  Image,
   Link as ThemeLink,
   Text,
 } from "theme-ui";
 
 const SignUp = (): JSX.Element => {
+  // TODO: Fix ESLint error
+  // eslint-disable-next-line
   const { register, handleSubmit } = useForm();
 
   const onSubmit = handleSubmit((data) => console.log(data));
 
   return (
     <Container sx={{ maxWidth: 325, pt: 20, textAlign: "center" }}>
-      <Image height={128} width={128} src="/logo.svg" mb={2} />
+      <Image height={128} width={128} src="/logo.svg" />
 
       <Heading mb={3}>Create your account</Heading>
 
