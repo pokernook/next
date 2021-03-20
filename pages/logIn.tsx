@@ -2,6 +2,7 @@ import Link from "next/link";
 import { withUrqlClient } from "next-urql";
 import { useForm } from "react-hook-form";
 import {
+  Alert,
   Box,
   Button,
   Card,
@@ -14,6 +15,7 @@ import {
 } from "theme-ui";
 import { useMutation } from "urql";
 
+import { FadeIn } from "../components/Animated";
 import { getClientConfig } from "../graphql/client";
 import { logInDocument, logInMutationVariables } from "../graphql/types";
 
@@ -21,7 +23,7 @@ const LogIn = (): JSX.Element => {
   // TODO: Fix ESLint error
   // eslint-disable-next-line
   const { register, handleSubmit } = useForm<logInMutationVariables>();
-  const [, logIn] = useMutation(logInDocument);
+  const [logInResult, logIn] = useMutation(logInDocument);
 
   const onSubmit = handleSubmit((data) => logIn(data));
 
@@ -30,6 +32,15 @@ const LogIn = (): JSX.Element => {
       <Image height={128} width={128} src="/logo.svg" />
 
       <Heading mb={3}>Enter the &apos;Nook</Heading>
+
+      {logInResult.error && (
+        <FadeIn>
+          <Alert variant="error" mb={3}>
+            {logInResult.error.networkError?.message ||
+              logInResult.error.graphQLErrors[0]?.message}
+          </Alert>
+        </FadeIn>
+      )}
 
       <Card>
         <Box as="form" onSubmit={onSubmit}>
