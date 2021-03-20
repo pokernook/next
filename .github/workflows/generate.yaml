@@ -14,13 +14,11 @@ jobs:
         with:
           node-version: 15.x
 
-      - name: Reflect App
-        run: |
-          npm ci
-          npm run generate:prisma
-          npm run generate:nexus
+      - name: Generate App
+        run: npm ci
 
       - name: Commit Schema
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Generate GraphQL schema
+          file_pattern: schema.graphql

@@ -17,8 +17,6 @@ jobs:
       - name: Run ESLint
         run: |
           npm ci
-          npm run generate:prisma
-          npm run generate:nexus
           npm run lint
 
   typecheck:
@@ -34,6 +32,4 @@ jobs:
       - name: Run TSC
         run: |
           npm ci
-          npm run generate:prisma
-          npm run generate:nexus
           npm run typecheck

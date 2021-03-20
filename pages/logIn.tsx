@@ -13,17 +13,16 @@ import {
   Link as ThemeLink,
   Text,
 } from "theme-ui";
-import { useMutation } from "urql";
 
 import { FadeIn } from "../components/Animated";
 import { getClientConfig } from "../graphql/client";
-import { logInDocument, logInMutationVariables } from "../graphql/types";
+import { LogInMutationVariables, useLogInMutation } from "../graphql/types";
 
 const LogIn = (): JSX.Element => {
   // TODO: Fix ESLint error
   // eslint-disable-next-line
-  const { register, handleSubmit } = useForm<logInMutationVariables>();
-  const [logInResult, logIn] = useMutation(logInDocument);
+  const { register, handleSubmit } = useForm<LogInMutationVariables>();
+  const [logInResult, logIn] = useLogInMutation();
 
   const onSubmit = handleSubmit((data) => logIn(data));
 
