@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { withUrqlClient } from "next-urql";
 import { useForm } from "react-hook-form";
@@ -9,7 +10,6 @@ import {
   Container,
   Field,
   Heading,
-  Image,
   Link as ThemeLink,
   Text,
 } from "theme-ui";
@@ -57,8 +57,13 @@ const LogIn = (): JSX.Element => {
             mb={3}
           />
 
-          <Button type="submit" variant="primary">
-            Log in to PokerNook
+          <Button
+            type="submit"
+            disabled={logInResult.fetching}
+            variant="primary"
+            sx={{ minWidth: "70%" }}
+          >
+            {logInResult.fetching ? "Hang in there..." : "Log in to PokerNook"}
           </Button>
         </Box>
       </Card>

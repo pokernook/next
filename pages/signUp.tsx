@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { withUrqlClient } from "next-urql";
 import { useForm } from "react-hook-form";
@@ -9,7 +10,6 @@ import {
   Container,
   Field,
   Heading,
-  Image,
   Link as ThemeLink,
   Text,
 } from "theme-ui";
@@ -65,8 +65,15 @@ const SignUp = (): JSX.Element => {
             mb={3}
           />
 
-          <Button type="submit" variant="primary">
-            Sign up for PokerNook
+          <Button
+            type="submit"
+            disabled={signUpResult.fetching}
+            variant="primary"
+            sx={{ minWidth: "70%" }}
+          >
+            {signUpResult.fetching
+              ? "We're working on it..."
+              : "Sign up for PokerNook"}
           </Button>
         </Box>
       </Card>

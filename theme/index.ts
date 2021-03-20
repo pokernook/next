@@ -75,6 +75,9 @@ export const theme: Theme = {
       fontWeight: "bold",
       px: 3,
       py: 2,
+      ":disabled": {
+        opacity: 0.8,
+      },
       "&:hover": {
         cursor: "pointer",
       },
