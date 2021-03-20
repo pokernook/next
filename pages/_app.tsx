@@ -3,7 +3,7 @@ import { ThemeProvider } from "theme-ui";
 
 import { theme } from "../theme";
 
-const App = ({ Component, pageProps }: AppProps) => {
+const App = ({ Component, pageProps }: AppProps): JSX.Element => {
   return (
     <ThemeProvider theme={theme}>
       <Component {...pageProps} />

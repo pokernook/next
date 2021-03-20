@@ -12,7 +12,7 @@ import {
   Text,
 } from "theme-ui";
 
-const SignUp = () => {
+const SignUp = (): JSX.Element => {
   const { register, handleSubmit } = useForm();
 
   const onSubmit = handleSubmit((data) => console.log(data));
@@ -27,26 +27,23 @@ const SignUp = () => {
         <Box as="form" onSubmit={onSubmit}>
           <Field
             label="Username"
-            name="username"
             type="text"
             spellCheck={false}
-            ref={register({ required: true })}
+            {...register("username", { required: true })}
             mb={2}
           />
 
           <Field
             label="Email"
-            name="email"
             type="email"
-            ref={register({ required: true })}
+            {...register("email", { required: true })}
             mb={2}
           />
 
           <Field
             label="Password"
-            name="password"
             type="password"
-            ref={register({ required: true })}
+            {...register("password", { required: true })}
             mb={3}
           />
 

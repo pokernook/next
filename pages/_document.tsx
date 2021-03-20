@@ -8,7 +8,7 @@ import {
 import { InitializeColorMode } from "theme-ui";
 
 class Document extends NextDocument {
-  render() {
+  render(): JSX.Element {
     return (
       <Html>
         <Head />
