@@ -1,9 +1,10 @@
 import { AppProps } from "next/app";
+import { FC } from "react";
 import { ThemeProvider } from "theme-ui";
 
 import { theme } from "../theme";
 
-const App = ({ Component, pageProps }: AppProps): JSX.Element => {
+const App: FC<AppProps> = ({ Component, pageProps }: AppProps) => {
   return (
     <ThemeProvider theme={theme}>
       <Component {...pageProps} />

@@ -1,4 +1,6 @@
-const Home = (): JSX.Element => {
+import { FC } from "react";
+
+const Home: FC = () => {
   return <></>;
 };
 

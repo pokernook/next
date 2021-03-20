@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { withUrqlClient } from "next-urql";
+import { FC } from "react";
 import { useForm } from "react-hook-form";
 import {
   Alert,
@@ -18,7 +19,7 @@ import { FadeIn } from "../components/Animated";
 import { getClientConfig } from "../graphql/client";
 import { SignUpMutationVariables, useSignUpMutation } from "../graphql/types";
 
-const SignUp = (): JSX.Element => {
+const SignUp: FC = () => {
   // TODO: Fix ESLint error
   // eslint-disable-next-line
   const { register, handleSubmit } = useForm<SignUpMutationVariables>();
