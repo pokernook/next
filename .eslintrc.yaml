@@ -30,5 +30,4 @@ settings:
 
 ignorePatterns:
   - /graphql/types.ts
-  - /generated
   - next.config.js

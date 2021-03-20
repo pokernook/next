@@ -12,7 +12,10 @@ export const schema = makeSchema({
   },
   outputs: {
     schema: true,
-    typegen: join(process.cwd(), "generated/nexus-typegen/index.d.ts"),
+    typegen: join(
+      process.cwd(),
+      "node_modules/@types/nexus-typegen/index.d.ts"
+    ),
   },
   plugins: [
     nexusShield({
@@ -21,5 +24,6 @@ export const schema = makeSchema({
     }),
     validatePlugin(),
   ],
+  shouldGenerateArtifacts: true,
   types,
 });
