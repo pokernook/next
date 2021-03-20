@@ -6,11 +6,11 @@
     "generate:prisma": "prisma generate",
     "generate:nexus": "ts-node --transpile-only --project tsconfig.nexus.json graphql/schema",
     "ts-node": "ts-node --project tsconfig.nexus.json",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --ext .js,.ts",
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "typecheck": "tsc --noEmit",
-    "lint": "eslint . --ext .js,.ts"
+    "start": "next start"
   },
   "dependencies": {
     "@prisma/client": "2.18.0",
