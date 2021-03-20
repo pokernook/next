@@ -4,9 +4,7 @@ import helmet from "fastify-helmet";
 import redis from "fastify-redis";
 import session from "fastify-session";
 import mercurius from "mercurius";
-import mercuriusCodegen from "mercurius-codegen";
 import { NextApiHandler } from "next";
-import { join } from "path";
 
 import { buildContext } from "../../graphql/context";
 import { schema } from "../../graphql/schema";
@@ -45,10 +43,6 @@ const build = async () => {
     graphiql: IS_PRODUCTION ? false : "playground", // TODO: Playground is not usable
     path: "/api/graphql",
     schema,
-  });
-  await mercuriusCodegen(app, {
-    targetPath: join(process.cwd(), "graphql/types.ts"),
-    operationsGlob: join(process.cwd(), "graphql/operations/**/*.graphql"),
   });
 
   return app;
