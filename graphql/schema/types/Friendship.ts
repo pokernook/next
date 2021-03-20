@@ -10,7 +10,8 @@ export const FriendshipObject = objectType({
     t.field(Friendship.id.name, { type: Friendship.id.type });
     t.nonNull.list.nonNull.field("users", {
       type: "User",
-      resolve: () => null, // TODO: implement users resolver
+      resolve: (parent, _args, ctx) =>
+        ctx.prisma.friendship.findUnique({ where: { id: parent.id } }).users(),
     });
   },
 });
