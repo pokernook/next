@@ -29,5 +29,5 @@ settings:
     version: detect
 
 ignorePatterns:
-  - "/generated"
+  - /graphql/types.ts
   - next.config.js

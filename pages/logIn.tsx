@@ -14,8 +14,8 @@ import {
 } from "theme-ui";
 import { useMutation } from "urql";
 
-import { logInDocument, logInMutationVariables } from "../generated/graphql";
 import { getClientConfig } from "../graphql/client";
+import { logInDocument, logInMutationVariables } from "../graphql/types";
 
 const LogIn = (): JSX.Element => {
   // TODO: Fix ESLint error

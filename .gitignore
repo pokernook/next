@@ -20,9 +20,6 @@
 # Environment
 .env*
 
-# Generated code
-/generated
-
 # Vercel
 .vercel
 
