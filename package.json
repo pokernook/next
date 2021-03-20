@@ -9,6 +9,7 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --ext .js,.ts",
     "dev": "next dev",
+    "prebuild": "npm run generate:prisma && npm run generate:nexus",
     "build": "next build",
     "start": "next start"
   },
