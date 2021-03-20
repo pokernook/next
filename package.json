@@ -4,7 +4,7 @@
   "repository": "github:pokernook/pokernook",
   "scripts": {
     "generate:prisma": "prisma generate",
-    "generate:nexus": "ts-node --transpile-only --project tsconfig.nexus.json graphql/schema",
+    "generate:nexus": "NODE_ENV=development ts-node --transpile-only --project tsconfig.nexus.json graphql/schema",
     "ts-node": "ts-node --project tsconfig.nexus.json",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --ext .js,.ts",

@@ -24,6 +24,5 @@ export const schema = makeSchema({
     }),
     validatePlugin(),
   ],
-  shouldGenerateArtifacts: true,
   types,
 });
