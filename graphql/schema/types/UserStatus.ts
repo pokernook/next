@@ -11,9 +11,10 @@ export const UserStatusObject = objectType({
     t.field(UserStatus.id.name, { type: UserStatus.id.type });
     t.field(UserStatus.message.name, { type: UserStatus.message.type });
     t.field(UserStatus.updatedAt.name, { type: UserStatus.updatedAt.type });
-    t.nonNull.field("user", {
+    t.field("user", {
       type: "User",
-      resolve: () => null, // TODO: implement user resolver
+      resolve: (parent, _args, ctx) =>
+        ctx.prisma.userStatus.findUnique({ where: { id: parent.id } }).user(),
     });
   },
 });

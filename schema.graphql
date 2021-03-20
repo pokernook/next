@@ -89,5 +89,5 @@ type UserStatus {
   id: ID!
   message: String
   updatedAt: DateTime!
-  user: User!
+  user: User
 }
