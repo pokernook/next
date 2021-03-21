@@ -1,6 +1,5 @@
 import Head from "next/head";
 import Link from "next/link";
-import { withUrqlClient } from "next-urql";
 import { FC } from "react";
 import { useForm } from "react-hook-form";
 import {
@@ -17,7 +16,6 @@ import {
 import { FadeIn } from "../components/Animated";
 import { AuthLayout } from "../components/AuthLayout";
 import { LogInMutationVariables, useLogInMutation } from "../graphql/types";
-import { getClientConfig } from "../urql";
 
 const LogIn: FC = () => {
   // TODO: Fix ESLint error
@@ -84,4 +82,4 @@ const LogIn: FC = () => {
   );
 };
 
-export default withUrqlClient(getClientConfig)(LogIn);
+export default LogIn;

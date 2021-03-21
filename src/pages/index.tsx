@@ -1,8 +1,6 @@
-import { withUrqlClient } from "next-urql";
 import { FC } from "react";
 
 import { DashboardLayout } from "../components/DashboardLayout";
-import { getClientConfig } from "../urql";
 
 const Home: FC = () => {
   return (
@@ -12,4 +10,4 @@ const Home: FC = () => {
   );
 };
 
-export default withUrqlClient(getClientConfig)(Home);
+export default Home;
