@@ -6,6 +6,7 @@ import {
   useMeQuery,
   useStatusClearMutation,
 } from "../graphql/types";
+import { useAvatarSrc } from "../hooks/use-avatar-src";
 import { MenuButton, MenuCard, MenuDivider, MenuItem } from "./Menu";
 import { ModalPortal } from "./Modal";
 import { ProfileModal } from "./ProfileModal";
@@ -20,6 +21,7 @@ export const UserNavMenu: FC = () => {
   const [profileModalOpen, setProfileModalOpen] = useState(false);
 
   const { data } = meQuery;
+  const avatarSrc = useAvatarSrc(data?.me);
 
   const handleLogOut = () => logOut();
 
@@ -46,19 +48,19 @@ export const UserNavMenu: FC = () => {
           onClick={openStatusModal}
           sx={{ fontSize: 2, p: 2 }}
         >
-          {data?.me?.status?.emoji}
+          {data?.me?.status.emoji}
         </Button>
       )}
 
       <Button variant="unstyled" onClick={() => setMenuOpen(true)}>
-        <Avatar src={undefined} sx={{ height: 32, width: 32 }} />
+        <Avatar src={avatarSrc} sx={{ height: 32, width: 32 }} />
       </Button>
 
       {menuOpen && (
         <ModalPortal onClose={() => setMenuOpen(false)}>
           <MenuCard sx={{ position: "absolute", right: 24, top: 40 }}>
             <MenuItem>
-              <Avatar src={undefined} sx={{ height: 40, width: 40, mr: 2 }} />
+              <Avatar src={avatarSrc} sx={{ height: 40, width: 40, mr: 2 }} />
               <Heading as="h3">{data?.me?.username}</Heading>
               <Heading as="h3" sx={{ color: "textMuted", fontWeight: "body" }}>
                 {data?.me?.discriminator}
