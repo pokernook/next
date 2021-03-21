@@ -23,6 +23,8 @@ rules:
   simple-import-sort/exports: "error"
   sort-imports: "off"
   react/react-in-jsx-scope: "off"
+  "@typescript-eslint/no-namespace":
+    allowDeclarations: true
 
 settings:
   react:
