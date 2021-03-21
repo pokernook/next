@@ -2,12 +2,12 @@ import { cacheExchange } from "@urql/exchange-graphcache";
 import { NextUrqlClientConfig } from "next-urql";
 import { dedupExchange, fetchExchange } from "urql";
 
-import { resolvers } from "./cache";
+import { resolvers, updates } from "./cache";
 
 export const getClientConfig: NextUrqlClientConfig = (ssrExchange) => ({
   exchanges: [
     dedupExchange,
-    cacheExchange({ resolvers }),
+    cacheExchange({ resolvers, updates }),
     ssrExchange,
     fetchExchange,
   ],
