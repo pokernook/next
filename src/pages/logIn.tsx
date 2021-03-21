@@ -16,44 +16,36 @@ import {
 
 import { FadeIn } from "../components/Animated";
 import { AuthLayout } from "../components/AuthLayout";
-import { getClientConfig } from "../graphql/client";
-import { SignUpMutationVariables, useSignUpMutation } from "../graphql/types";
+import { LogInMutationVariables, useLogInMutation } from "../graphql/types";
+import { getClientConfig } from "../urql";
 
-const SignUp: FC = () => {
+const LogIn: FC = () => {
   // TODO: Fix ESLint error
   // eslint-disable-next-line
-  const { register, handleSubmit } = useForm<SignUpMutationVariables>();
-  const [signUpResult, signUp] = useSignUpMutation();
+  const { register, handleSubmit } = useForm<LogInMutationVariables>();
+  const [logInResult, logIn] = useLogInMutation();
 
-  const onSubmit = handleSubmit((data) => signUp(data));
+  const onSubmit = handleSubmit((data) => logIn(data));
 
   return (
     <AuthLayout>
       <Head>
-        <title>PokerNook - Sign Up</title>
+        <title>PokerNook - Log In</title>
       </Head>
 
-      <Heading mb={3}>Create your account</Heading>
+      <Heading mb={3}>Enter the &apos;Nook</Heading>
 
-      {signUpResult.error && (
+      {logInResult.error && (
         <FadeIn>
           <Alert variant="error" mb={3}>
-            {signUpResult.error.networkError?.message ||
-              signUpResult.error.graphQLErrors[0]?.message}
+            {logInResult.error.networkError?.message ||
+              logInResult.error.graphQLErrors[0]?.message}
           </Alert>
         </FadeIn>
       )}
 
       <Card>
         <Box as="form" onSubmit={onSubmit}>
-          <Field
-            label="Username"
-            type="text"
-            spellCheck={false}
-            {...register("username", { required: true })}
-            mb={2}
-          />
-
           <Field
             label="Email"
             type="email"
@@ -70,22 +62,20 @@ const SignUp: FC = () => {
 
           <Button
             type="submit"
-            disabled={signUpResult.fetching}
+            disabled={logInResult.fetching}
             variant="primary"
             sx={{ minWidth: "70%" }}
           >
-            {signUpResult.fetching
-              ? "We're working on it..."
-              : "Sign up for PokerNook"}
+            {logInResult.fetching ? "Hang in there..." : "Log in to PokerNook"}
           </Button>
         </Box>
       </Card>
 
       <Card mt={3}>
         <Text>
-          Been here before?{" "}
-          <Link href="/logIn" passHref>
-            <ThemeLink>Log in</ThemeLink>
+          New &apos;round these parts?{" "}
+          <Link href="/signUp" passHref>
+            <ThemeLink>Sign up</ThemeLink>
           </Link>
           .
         </Text>
@@ -94,4 +84,4 @@ const SignUp: FC = () => {
   );
 };
 
-export default withUrqlClient(getClientConfig)(SignUp);
+export default withUrqlClient(getClientConfig)(LogIn);

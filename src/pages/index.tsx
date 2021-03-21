@@ -2,7 +2,7 @@ import { withUrqlClient } from "next-urql";
 import { FC } from "react";
 
 import { DashboardLayout } from "../components/DashboardLayout";
-import { getClientConfig } from "../graphql/client";
+import { getClientConfig } from "../urql";
 
 const Home: FC = () => {
   return (

@@ -8,7 +8,7 @@ import * as types from "./types";
 export const schema = makeSchema({
   contextType: {
     export: "Context",
-    module: join(process.cwd(), "graphql/context.ts"),
+    module: join(process.cwd(), "src/graphql/context.ts"),
   },
   outputs: {
     schema: true,
