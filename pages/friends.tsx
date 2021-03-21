@@ -1,12 +1,12 @@
 import { FC } from "react";
 
-import { PrivateLayout } from "../components/PrivateLayout";
+import { DashboardLayout } from "../components/DashboardLayout";
 
 const Friends: FC = () => {
   return (
-    <PrivateLayout>
+    <DashboardLayout>
       <></>
-    </PrivateLayout>
+    </DashboardLayout>
   );
 };
 
