@@ -3,6 +3,8 @@ import Link from "next/link";
 import { FC } from "react";
 import { Button, Flex } from "theme-ui";
 
+import { UserNavMenu } from "./UserNavMenu";
+
 export const TopNav: FC = () => (
   <Flex
     as="header"
@@ -27,6 +29,8 @@ export const TopNav: FC = () => (
       </Link>
     </Flex>
 
-    <Flex sx={{ flex: 1, justifyContent: "flex-end", mx: 4 }} />
+    <Flex sx={{ flex: 1, justifyContent: "flex-end", mx: 4 }}>
+      <UserNavMenu />
+    </Flex>
   </Flex>
 );
