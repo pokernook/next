@@ -1,4 +1,4 @@
-import { FC, ReactNode } from "react";
+import { FC, ReactNode, useEffect } from "react";
 import { createPortal } from "react-dom";
 import {
   Box,
@@ -21,14 +21,23 @@ export const ModalPortal: FC<ModalPortalProps> = ({
   onClose,
   hasDimmedBackground = false,
   children,
-}: ModalPortalProps) =>
-  createPortal(
+}: ModalPortalProps) => {
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  });
+
+  return createPortal(
     <ModalWrapper hasDimmedBackground={hasDimmedBackground}>
       <ModalOverlay onClick={onClose} />
       {children}
     </ModalWrapper>,
     document.body
   );
+};
 
 export const ModalCard: FC = ({ children }: CardProps) => (
   <Card variant="modal">{children}</Card>
