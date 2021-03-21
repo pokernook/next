@@ -2,7 +2,7 @@ import { PrismaClient, User } from "@prisma/client";
 import { FastifyRequest } from "fastify";
 import { MercuriusContext } from "mercurius";
 
-const prisma = new PrismaClient();
+import prisma from "./prisma-client";
 
 export type Context = ServerContext & MercuriusContext;
 
