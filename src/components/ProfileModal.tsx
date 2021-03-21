@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { Avatar, Box, Button, Field, Grid, Input, Label } from "theme-ui";
 
 import { useMeQuery, useUpdateUsernameMutation } from "../graphql/types";
+import { useAvatarSrc } from "../hooks/use-avatar-src";
 import { CropperModal } from "./CropperModal";
 import {
   ModalCard,
@@ -24,6 +25,7 @@ type FormData = {
 export const ProfileModal: FC<Props> = ({ onClose }: Props) => {
   const [meQuery] = useMeQuery();
   const { data } = meQuery;
+  const avatarSrc = useAvatarSrc(data?.me);
   const [, updateUsername] = useUpdateUsernameMutation();
   const imageInput = useRef<HTMLInputElement>(null);
   const [rawImageUrl, setRawImageUrl] = useState<string>();
@@ -78,7 +80,7 @@ export const ProfileModal: FC<Props> = ({ onClose }: Props) => {
                 <Label>Profile photo</Label>
                 <div>
                   <Avatar
-                    src={croppedImageUrl || undefined}
+                    src={croppedImageUrl || avatarSrc}
                     sx={{ height: 160, width: 160 }}
                   />
                   <Input

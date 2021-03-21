@@ -3,6 +3,7 @@ import { Avatar, Box, Divider, Flex, Heading } from "theme-ui";
 
 import { NavLink, NavLinkProps } from "../components/NavLink";
 import { useMeQuery } from "../graphql/types";
+import { useAvatarSrc } from "../hooks/use-avatar-src";
 
 const sideNavRoutes: NavLinkProps[] = [
   { href: "/", children: "Home" },
@@ -13,11 +14,12 @@ export const SideNav: FC = () => {
   const [meQuery] = useMeQuery();
 
   const { data } = meQuery;
+  const avatarSrc = useAvatarSrc(data?.me);
 
   return (
     <>
       <Flex sx={{ alignItems: "center", mx: 3 }}>
-        <Avatar src={undefined} sx={{ height: 48, width: 48, mr: 2 }} />
+        <Avatar src={avatarSrc} sx={{ height: 48, width: 48, mr: 2 }} />
         <Heading as="h3">{data?.me?.username}</Heading>
         <Heading as="h3" sx={{ color: "textMuted", fontWeight: "body" }}>
           {data?.me?.discriminator}
