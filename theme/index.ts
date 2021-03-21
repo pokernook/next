@@ -60,10 +60,11 @@ export const theme: Theme = {
       p: 2,
       ":hover": {
         color: "text",
-        bg: alpha("secondary", 0.1),
+        bg: alpha("secondary", 0.15),
         cursor: "pointer",
       },
       "&.active": {
+        color: "text",
         bg: "secondary",
       },
     },
