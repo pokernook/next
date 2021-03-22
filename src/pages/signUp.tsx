@@ -1,4 +1,3 @@
-import Head from "next/head";
 import Link from "next/link";
 import { FC } from "react";
 import { useForm } from "react-hook-form";
@@ -27,10 +26,6 @@ const SignUp: FC = () => {
 
   return (
     <AuthLayout>
-      <Head>
-        <title>PokerNook - Sign Up</title>
-      </Head>
-
       <Heading mb={3}>Create your account</Heading>
 
       {signUpResult.error && (
