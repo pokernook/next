@@ -3,6 +3,7 @@ import { FC, ReactNode } from "react";
 import { Box, Grid } from "theme-ui";
 
 import { useUser } from "../hooks/use-user";
+import { Loading } from "./Loading";
 import { SideNav } from "./SideNav";
 import { TopNav } from "./TopNav";
 
@@ -13,7 +14,11 @@ type DashboardLayoutProps = {
 export const DashboardLayout: FC<DashboardLayoutProps> = ({
   children,
 }: DashboardLayoutProps) => {
-  useUser({ redirectTo: "/logIn" });
+  const { fetching, user } = useUser({ redirectTo: "/logIn" });
+
+  if (fetching || !user) {
+    return <Loading />;
+  }
 
   return (
     <>

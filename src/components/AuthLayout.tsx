@@ -4,6 +4,7 @@ import { FC, ReactNode } from "react";
 import { Container } from "theme-ui";
 
 import { useUser } from "../hooks/use-user";
+import { Loading } from "./Loading";
 
 type AuthLayoutProps = {
   children: ReactNode;
@@ -12,7 +13,14 @@ type AuthLayoutProps = {
 export const AuthLayout: FC<AuthLayoutProps> = ({
   children,
 }: AuthLayoutProps) => {
-  useUser({ redirectTo: "/", redirectIfFound: true });
+  const { fetching } = useUser({
+    redirectTo: "/",
+    redirectIfFound: true,
+  });
+
+  if (fetching) {
+    return <Loading />;
+  }
 
   return (
     <>
