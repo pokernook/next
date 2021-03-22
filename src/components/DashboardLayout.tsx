@@ -20,6 +20,7 @@ export const DashboardLayout: FC<DashboardLayoutProps> = ({
     return <Loading />;
   }
 
+  // TODO: scrollbar should be overlayed on page
   return (
     <>
       <Head>
