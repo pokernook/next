@@ -10,7 +10,7 @@ import { ProfileModal } from "./ProfileModal";
 import { StatusModal } from "./StatusModal";
 
 export const UserNavMenu: FC = () => {
-  const user = useUser();
+  const { user } = useUser();
   const [, clearStatus] = useStatusClearMutation();
   const [, logOut] = useLogOutMutation();
   const [menuOpen, setMenuOpen] = useState(false);

@@ -23,7 +23,7 @@ export const AccountSettings: FC = () => (
 );
 
 const UpdateEmail = () => {
-  const user = useUser();
+  const { user } = useUser();
   const {
     handleSubmit,
     register,

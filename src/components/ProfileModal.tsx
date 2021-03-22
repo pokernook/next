@@ -24,7 +24,7 @@ type FormData = {
 };
 
 export const ProfileModal: FC<Props> = ({ onClose }: Props) => {
-  const user = useUser();
+  const { user } = useUser();
   const avatarSrc = useAvatarSrc(user);
   const [, updateUsername] = useUpdateUsernameMutation();
   const imageInput = useRef<HTMLInputElement>(null);

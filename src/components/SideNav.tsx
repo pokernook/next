@@ -11,7 +11,7 @@ const sideNavRoutes: NavLinkProps[] = [
 ];
 
 export const SideNav: FC = () => {
-  const user = useUser();
+  const { user } = useUser();
   const avatarSrc = useAvatarSrc(user);
 
   return (

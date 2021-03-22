@@ -8,10 +8,15 @@ type UseUserArgs = {
   redirectIfFound?: boolean;
 };
 
+type UseUserReturn = {
+  user: UserFieldsFragment | null | undefined;
+  fetching: boolean;
+};
+
 export const useUser = ({
   redirectTo = "",
   redirectIfFound = false,
-}: UseUserArgs = {}): UserFieldsFragment | null | undefined => {
+}: UseUserArgs = {}): UseUserReturn => {
   const router = useRouter();
   const [meQuery] = useMeQuery();
   const { data, fetching } = meQuery;
@@ -26,5 +31,5 @@ export const useUser = ({
     }
   }, [data?.me, fetching, redirectIfFound, redirectTo]);
 
-  return data?.me;
+  return { user: data?.me, fetching };
 };

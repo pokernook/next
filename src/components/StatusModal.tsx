@@ -28,7 +28,7 @@ type Props = {
 type FormData = StatusSetMutationVariables;
 
 export const StatusModal: FC<Props> = ({ onClose }: Props) => {
-  const user = useUser();
+  const { user } = useUser();
   const defaultEmoji = user?.status?.emoji || "💬";
   const [, clearStatus] = useStatusClearMutation();
   const [setStatusResult, setStatus] = useStatusSetMutation();
