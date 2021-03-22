@@ -2,8 +2,8 @@ import { FC } from "react";
 import { Avatar, Box, Divider, Flex, Heading } from "theme-ui";
 
 import { NavLink, NavLinkProps } from "../components/NavLink";
-import { useMeQuery } from "../graphql/types";
 import { useAvatarSrc } from "../hooks/use-avatar-src";
+import { useUser } from "../hooks/use-user";
 
 const sideNavRoutes: NavLinkProps[] = [
   { href: "/", children: "Home" },
@@ -11,18 +11,16 @@ const sideNavRoutes: NavLinkProps[] = [
 ];
 
 export const SideNav: FC = () => {
-  const [meQuery] = useMeQuery();
-
-  const { data } = meQuery;
-  const avatarSrc = useAvatarSrc(data?.me);
+  const user = useUser();
+  const avatarSrc = useAvatarSrc(user);
 
   return (
     <>
       <Flex sx={{ alignItems: "center", mx: 3 }}>
         <Avatar src={avatarSrc} sx={{ height: 48, width: 48, mr: 2 }} />
-        <Heading as="h3">{data?.me?.username}</Heading>
+        <Heading as="h3">{user?.username}</Heading>
         <Heading as="h3" sx={{ color: "textMuted", fontWeight: "body" }}>
-          {data?.me?.discriminator}
+          {user?.discriminator}
         </Heading>
       </Flex>
 

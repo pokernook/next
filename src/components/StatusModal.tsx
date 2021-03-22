@@ -7,10 +7,10 @@ import { Box, Button, Field, Text } from "theme-ui";
 
 import {
   StatusSetMutationVariables,
-  useMeQuery,
   useStatusClearMutation,
   useStatusSetMutation,
 } from "../graphql/types";
+import { useUser } from "../hooks/use-user";
 import { FadeIn } from "./Animated";
 import {
   ModalCard,
@@ -28,16 +28,15 @@ type Props = {
 type FormData = StatusSetMutationVariables;
 
 export const StatusModal: FC<Props> = ({ onClose }: Props) => {
-  const [meQuery] = useMeQuery();
-  const { data } = meQuery;
-  const defaultEmoji = data?.me?.status?.emoji || "💬";
+  const user = useUser();
+  const defaultEmoji = user?.status?.emoji || "💬";
   const [, clearStatus] = useStatusClearMutation();
   const [setStatusResult, setStatus] = useStatusSetMutation();
   const [emojiPickerOpen, setEmojiPickerOpen] = useState(false);
   const { control, handleSubmit, register, getValues } = useForm<FormData>({
     defaultValues: {
       emoji: defaultEmoji,
-      message: data?.me?.status?.message,
+      message: user?.status?.message,
     },
   });
 
@@ -67,7 +66,7 @@ export const StatusModal: FC<Props> = ({ onClose }: Props) => {
             sx={{ px: 3 }}
           >
             <Field
-              label={`What's happening ${data?.me?.username || ""}?`}
+              label={`What's happening ${user?.username || ""}?`}
               type="text"
               {...register("message", { required: true })}
               spellCheck

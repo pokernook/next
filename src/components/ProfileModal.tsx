@@ -2,8 +2,9 @@ import { ChangeEvent, FC, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Avatar, Box, Button, Field, Grid, Input, Label } from "theme-ui";
 
-import { useMeQuery, useUpdateUsernameMutation } from "../graphql/types";
+import { useUpdateUsernameMutation } from "../graphql/types";
 import { useAvatarSrc } from "../hooks/use-avatar-src";
+import { useUser } from "../hooks/use-user";
 import { CropperModal } from "./CropperModal";
 import {
   ModalCard,
@@ -23,16 +24,15 @@ type FormData = {
 };
 
 export const ProfileModal: FC<Props> = ({ onClose }: Props) => {
-  const [meQuery] = useMeQuery();
-  const { data } = meQuery;
-  const avatarSrc = useAvatarSrc(data?.me);
+  const user = useUser();
+  const avatarSrc = useAvatarSrc(user);
   const [, updateUsername] = useUpdateUsernameMutation();
   const imageInput = useRef<HTMLInputElement>(null);
   const [rawImageUrl, setRawImageUrl] = useState<string>();
   const [croppedImageUrl, setCroppedImageUrl] = useState<string>();
   const [cropperOpen, setCropperOpen] = useState(false);
   const { register, handleSubmit } = useForm<FormData>({
-    defaultValues: { username: data?.me?.username },
+    defaultValues: { username: user?.username },
   });
 
   const openImageUpload = () => imageInput.current?.click();

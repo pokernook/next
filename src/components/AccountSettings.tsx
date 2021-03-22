@@ -6,10 +6,10 @@ import {
   MutationUserUpdateEmailArgs,
   MutationUserUpdatePasswordArgs,
   useDeleteAccountMutation,
-  useMeQuery,
   useUpdateEmailMutation,
   useUpdatePasswordMutation,
 } from "../graphql/types";
+import { useUser } from "../hooks/use-user";
 import { FadeIn } from "./Animated";
 
 export const AccountSettings: FC = () => (
@@ -23,15 +23,14 @@ export const AccountSettings: FC = () => (
 );
 
 const UpdateEmail = () => {
-  const [meQuery] = useMeQuery();
-  const { data } = meQuery;
+  const user = useUser();
   const {
     handleSubmit,
     register,
     formState,
     reset,
   } = useForm<MutationUserUpdateEmailArgs>({
-    defaultValues: { newEmail: data?.me?.email },
+    defaultValues: { newEmail: user?.email },
   });
   const [, updateEmail] = useUpdateEmailMutation();
 
@@ -57,7 +56,7 @@ const UpdateEmail = () => {
       />
 
       <Box mt={1} mb={3} ml={1}>
-        {!data?.me?.emailVerified && (
+        {!user?.emailVerified && (
           <Text variant="help">
             Not verified; check your inbox, or{" "}
             <Link>resend the verification email</Link>.

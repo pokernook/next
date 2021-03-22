@@ -1,27 +1,22 @@
 import { FC, useState } from "react";
 import { Avatar, Button, Heading, Text } from "theme-ui";
 
-import {
-  useLogOutMutation,
-  useMeQuery,
-  useStatusClearMutation,
-} from "../graphql/types";
+import { useLogOutMutation, useStatusClearMutation } from "../graphql/types";
 import { useAvatarSrc } from "../hooks/use-avatar-src";
+import { useUser } from "../hooks/use-user";
 import { MenuButton, MenuCard, MenuDivider, MenuItem } from "./Menu";
 import { ModalPortal } from "./Modal";
 import { ProfileModal } from "./ProfileModal";
 import { StatusModal } from "./StatusModal";
 
 export const UserNavMenu: FC = () => {
-  const [meQuery] = useMeQuery();
+  const user = useUser();
   const [, clearStatus] = useStatusClearMutation();
   const [, logOut] = useLogOutMutation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [statusModalOpen, setStatusModalOpen] = useState(false);
   const [profileModalOpen, setProfileModalOpen] = useState(false);
-
-  const { data } = meQuery;
-  const avatarSrc = useAvatarSrc(data?.me);
+  const avatarSrc = useAvatarSrc(user);
 
   const handleLogOut = () => logOut();
 
@@ -42,13 +37,13 @@ export const UserNavMenu: FC = () => {
 
   return (
     <>
-      {data?.me?.status && (
+      {user?.status && (
         <Button
           variant="unstyled"
           onClick={openStatusModal}
           sx={{ fontSize: 2, p: 2 }}
         >
-          {data?.me?.status.emoji}
+          {user?.status.emoji}
         </Button>
       )}
 
@@ -61,9 +56,9 @@ export const UserNavMenu: FC = () => {
           <MenuCard sx={{ position: "absolute", right: 24, top: 40 }}>
             <MenuItem>
               <Avatar src={avatarSrc} sx={{ height: 40, width: 40, mr: 2 }} />
-              <Heading as="h3">{data?.me?.username}</Heading>
+              <Heading as="h3">{user?.username}</Heading>
               <Heading as="h3" sx={{ color: "textMuted", fontWeight: "body" }}>
-                {data?.me?.discriminator}
+                {user?.discriminator}
               </Heading>
             </MenuItem>
 
@@ -80,9 +75,9 @@ export const UserNavMenu: FC = () => {
                 }}
                 onClick={openStatusModal}
               >
-                {data?.me?.status ? (
+                {user?.status ? (
                   <Text>
-                    {data.me.status.emoji} {data.me.status.message}
+                    {user.status.emoji} {user.status.message}
                   </Text>
                 ) : (
                   <Text color="textMuted">Update status</Text>
@@ -90,7 +85,7 @@ export const UserNavMenu: FC = () => {
               </Button>
             </MenuItem>
 
-            {data?.me?.status && (
+            {user?.status && (
               <MenuButton onClick={handleClearStatus}>Clear status</MenuButton>
             )}
 
