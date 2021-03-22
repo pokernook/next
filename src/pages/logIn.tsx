@@ -17,8 +17,6 @@ import { AuthLayout } from "../components/AuthLayout";
 import { LogInMutationVariables, useLogInMutation } from "../graphql/types";
 
 const LogIn: FC = () => {
-  // TODO: Fix ESLint error
-  // eslint-disable-next-line
   const { register, handleSubmit } = useForm<LogInMutationVariables>();
   const [logInResult, logIn] = useLogInMutation();
 
