@@ -16,8 +16,10 @@ import {
 import { FadeIn } from "../components/Animated";
 import { AuthLayout } from "../components/AuthLayout";
 import { SignUpMutationVariables, useSignUpMutation } from "../graphql/types";
+import { useUser } from "../hooks/use-user";
 
 const SignUp: FC = () => {
+  useUser({ redirectTo: "/", redirectIfFound: true });
   // TODO: Fix ESLint error
   // eslint-disable-next-line
   const { register, handleSubmit } = useForm<SignUpMutationVariables>();

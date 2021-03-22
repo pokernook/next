@@ -16,8 +16,10 @@ import {
 import { FadeIn } from "../components/Animated";
 import { AuthLayout } from "../components/AuthLayout";
 import { LogInMutationVariables, useLogInMutation } from "../graphql/types";
+import { useUser } from "../hooks/use-user";
 
 const LogIn: FC = () => {
+  useUser({ redirectTo: "/", redirectIfFound: true });
   // TODO: Fix ESLint error
   // eslint-disable-next-line
   const { register, handleSubmit } = useForm<LogInMutationVariables>();
