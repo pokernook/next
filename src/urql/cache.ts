@@ -11,6 +11,32 @@ export const resolvers: ResolverConfig = {
 
 export const updates: Partial<UpdatesConfig> = {
   Mutation: {
+    userLogIn: (result, _args, cache) => {
+      cache.updateQuery(
+        { query: graphql.MeDocument },
+        (data: graphql.MeQuery | null) => {
+          const castResult = result as graphql.LogInMutation;
+          if (data) {
+            data.me = castResult.userLogIn?.user || null;
+          }
+          return data;
+        }
+      );
+    },
+
+    userSignUp: (result, _args, cache) => {
+      cache.updateQuery(
+        { query: graphql.MeDocument },
+        (data: graphql.MeQuery | null) => {
+          const castResult = result as graphql.SignUpMutation;
+          if (data) {
+            data.me = castResult.userSignUp?.user || null;
+          }
+          return data;
+        }
+      );
+    },
+
     userLogOut: (_result, _args, cache) => {
       cache.invalidate("Query", "me");
     },
