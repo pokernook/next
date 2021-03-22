@@ -11,12 +11,13 @@ export const TopNav: FC = () => (
     sx={{
       alignItems: "center",
       bg: "background",
-      position: "sticky",
-      top: 0,
       borderBottom: "solid",
       borderBottomColor: "border",
       borderBottomWidth: 1,
-      zIndex: 1,
+      justifyContent: "center",
+      minWidth: 0,
+      position: "relative",
+      zIndex: 8,
     }}
   >
     <Flex sx={{ flex: 1, justifyContent: "flex-start", mx: 4 }} />

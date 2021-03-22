@@ -30,20 +30,28 @@ export const DashboardLayout: FC<DashboardLayoutProps> = ({
         columns={["auto"]}
         gap="0px"
         sx={{
-          minHeight: "100vh",
+          height: "100vh",
           width: "100vw",
-          gridTemplateRows: "50px auto",
-          display: "relative",
+          gridTemplateRows: "50px auto min-content",
         }}
       >
         <TopNav />
-        <Grid columns={[2, "280px 1fr"]} gap="0px">
+        <Grid
+          columns={[2, "280px 1fr"]}
+          gap="0px"
+          sx={{
+            gridTemplateRows: "auto",
+            position: "relative",
+            overflow: "hidden",
+          }}
+        >
           <Box
             as="aside"
             sx={{
               borderRight: "solid",
               borderRightColor: "border",
               borderRightWidth: 1,
+              py: 3,
             }}
           >
             <SideNav />
@@ -52,9 +60,8 @@ export const DashboardLayout: FC<DashboardLayoutProps> = ({
           <Box
             as="main"
             sx={{
-              display: "inherit",
-              minHeight: "inherit",
-              width: "100%",
+              minWidth: 0,
+              minHeight: 0,
               overflow: "auto",
             }}
           >
