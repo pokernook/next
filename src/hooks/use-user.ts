@@ -29,7 +29,7 @@ export const useUser = ({
     if ((!redirectIfFound && !data?.me) || (redirectIfFound && data?.me)) {
       void router.push(redirectTo);
     }
-  }, [data?.me, fetching, redirectIfFound, redirectTo]);
+  }, [data?.me, fetching, redirectIfFound, redirectTo, router]);
 
   return { user: data?.me, fetching };
 };
