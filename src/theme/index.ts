@@ -3,6 +3,7 @@ import { Theme } from "theme-ui";
 
 export const theme: Theme = {
   colors: {
+    // TODO: Default theme should be light
     background: "#06090e",
     text: "#f0f6fc",
     primary: "#238636",
@@ -12,6 +13,19 @@ export const theme: Theme = {
     border: "#2f353d",
     muted: "#0e1116",
     textMuted: "#4b5669",
+    modes: {
+      dark: {
+        background: "#06090e",
+        text: "#f0f6fc",
+        primary: "#238636",
+        secondary: "#1f71eb",
+        success: "#56d364",
+        error: "#f85249",
+        border: "#2f353d",
+        muted: "#0e1116",
+        textMuted: "#4b5669",
+      },
+    },
   },
   fonts: {
     code: "source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace",
