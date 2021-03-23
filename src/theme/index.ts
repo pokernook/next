@@ -2,7 +2,6 @@ import { alpha, lighten } from "@theme-ui/color";
 import { Theme } from "theme-ui";
 
 export const theme: Theme = {
-  useLocalStorage: false,
   colors: {
     background: "#06090e",
     text: "#f0f6fc",
