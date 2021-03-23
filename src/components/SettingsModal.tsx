@@ -17,6 +17,7 @@ import {
   ModalHeader,
   ModalPortal,
 } from "./Modal";
+import { ThemeSettings } from "./ThemeSettings";
 
 type Props = {
   onClose: () => void;
@@ -74,7 +75,9 @@ const SettingsRoutes = () => (
       <AccountSettings />
     </Route>
 
-    <Route exact path="/settings/theme" />
+    <Route exact path="/settings/theme">
+      <ThemeSettings />
+    </Route>
 
     <Route>
       <Redirect to="/settings/account" />
