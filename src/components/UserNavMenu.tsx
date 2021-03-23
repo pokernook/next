@@ -7,6 +7,7 @@ import { useUser } from "../hooks/use-user";
 import { MenuButton, MenuCard, MenuDivider, MenuItem } from "./Menu";
 import { ModalPortal } from "./Modal";
 import { ProfileModal } from "./ProfileModal";
+import { SettingsModal } from "./SettingsModal";
 import { StatusModal } from "./StatusModal";
 
 export const UserNavMenu: FC = () => {
@@ -14,11 +15,17 @@ export const UserNavMenu: FC = () => {
   const [, clearStatus] = useStatusClearMutation();
   const [, logOut] = useLogOutMutation();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [settingsModalOpen, setSettingsModalOpen] = useState(false);
   const [statusModalOpen, setStatusModalOpen] = useState(false);
   const [profileModalOpen, setProfileModalOpen] = useState(false);
   const avatarSrc = useAvatarSrc(user);
 
   const handleLogOut = () => logOut();
+
+  const openSettingsModal = () => {
+    setMenuOpen(false);
+    setSettingsModalOpen(true);
+  };
 
   const openStatusModal = () => {
     setMenuOpen(false);
@@ -95,13 +102,17 @@ export const UserNavMenu: FC = () => {
             <MenuButton onClick={() => setMenuOpen(false)}>
               View profile
             </MenuButton>
-            <MenuButton onClick={() => setMenuOpen(false)}>Settings</MenuButton>
+            <MenuButton onClick={openSettingsModal}>Settings</MenuButton>
 
             <MenuDivider />
 
             <MenuButton onClick={handleLogOut}>Log out of PokerNook</MenuButton>
           </MenuCard>
         </ModalPortal>
+      )}
+
+      {settingsModalOpen && (
+        <SettingsModal onClose={() => setSettingsModalOpen(false)} />
       )}
 
       {statusModalOpen && (
