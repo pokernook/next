@@ -10,7 +10,7 @@ export const TopNav: FC = () => (
     as="header"
     sx={{
       alignItems: "center",
-      bg: "background",
+      bg: "topNav",
       borderBottom: "solid",
       borderBottomColor: "border",
       borderBottomWidth: 1,

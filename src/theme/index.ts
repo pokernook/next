@@ -1,29 +1,36 @@
-import { alpha, lighten } from "@theme-ui/color";
+import { alpha } from "@theme-ui/color";
 import { Theme } from "theme-ui";
 
 export const theme: Theme = {
   colors: {
-    // TODO: Default theme should be light
-    background: "#06090e",
-    text: "#f0f6fc",
-    primary: "#238636",
+    background: "#fff",
+    text: "#24292e",
+    buttonText: "#f0f6fc",
+    primary: "#2ea44f",
     secondary: "#1f71eb",
+    gray: "#848d96",
     success: "#56d364",
-    error: "#f85249",
-    border: "#2f353d",
-    muted: "#0e1116",
-    textMuted: "#4b5669",
+    error: "#e83a31",
+    border: "#d1d5da",
+    muted: "#f7f7f7",
+    textMuted: "#868e9c",
+    topNav: "#f8f8fa",
+    sideNav: "#f8f8fa",
     modes: {
       dark: {
         background: "#06090e",
         text: "#f0f6fc",
+        buttonText: "#f0f6fc",
         primary: "#238636",
         secondary: "#1f71eb",
+        gray: "#2f353d",
         success: "#56d364",
         error: "#f85249",
         border: "#2f353d",
         muted: "#0e1116",
         textMuted: "#4b5669",
+        topNav: "#06090e",
+        sideNav: "#06090e",
       },
     },
   },
@@ -77,7 +84,7 @@ export const theme: Theme = {
         cursor: "pointer",
       },
       "&.active": {
-        color: "text",
+        color: "buttonText",
         bg: "secondary",
       },
     },
@@ -85,7 +92,7 @@ export const theme: Theme = {
   buttons: {
     primary: {
       bg: "primary",
-      color: "text",
+      color: "buttonText",
       fontWeight: "bold",
       px: 3,
       py: 2,
@@ -101,7 +108,7 @@ export const theme: Theme = {
     },
     secondary: {
       bg: "secondary",
-      color: "text",
+      color: "buttonText",
       fontWeight: "bold",
       px: 3,
       py: 2,
@@ -113,8 +120,8 @@ export const theme: Theme = {
       },
     },
     tertiary: {
-      bg: "border",
-      color: "text",
+      bg: "gray",
+      color: "buttonText",
       fontWeight: "bold",
       px: 3,
       py: 2,
@@ -127,7 +134,7 @@ export const theme: Theme = {
     },
     danger: {
       bg: "error",
-      color: "text",
+      color: "buttonText",
       fontWeight: "bold",
       px: 3,
       py: 2,
@@ -142,12 +149,14 @@ export const theme: Theme = {
       alignItems: "center",
       borderRadius: 0,
       bg: "inherit",
+      color: "text",
       display: "flex",
       px: 3,
       py: 1,
       width: "100%",
       ":hover": {
         cursor: "pointer",
+        color: "buttonText",
         bg: "secondary",
       },
     },
@@ -166,11 +175,11 @@ export const theme: Theme = {
     close: {
       color: "text",
       ":hover": {
-        bg: lighten("muted", 0.05),
+        bg: alpha("border", 0.4),
         cursor: "pointer",
       },
       ":active": {
-        bg: lighten("muted", 0.1),
+        bg: alpha("border", 0.7),
       },
     },
   },
@@ -212,7 +221,7 @@ export const theme: Theme = {
       bg: alpha("error", 0.2),
       border: "solid",
       borderColor: "error",
-      borderWidth: 1,
+      borderWidth: 2,
       color: "text",
       fontWeight: "body",
       p: 3,
@@ -222,9 +231,6 @@ export const theme: Theme = {
   images: {
     avatar: {
       bg: "black",
-      border: "solid",
-      borderColor: "border",
-      borderWidth: 1,
       borderRadius: 4,
     },
   },

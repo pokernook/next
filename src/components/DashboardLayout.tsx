@@ -49,6 +49,7 @@ export const DashboardLayout: FC<DashboardLayoutProps> = ({
           <Box
             as="aside"
             sx={{
+              bg: "sideNav",
               borderRight: "solid",
               borderRightColor: "border",
               borderRightWidth: 1,
