@@ -93,7 +93,7 @@ const getAvatarSvgFromData = (avatarData: string, size: number) => {
 export const generateAvatarSvg = (
   seed: string,
   complexity = 6,
-  size = 256
+  size = 780
 ): string => {
   const avatarData = generateRandomAvatarData(seed, complexity);
   return getAvatarSvgFromData(avatarData, size);
