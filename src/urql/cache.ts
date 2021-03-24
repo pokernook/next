@@ -56,5 +56,18 @@ export const updates: Partial<UpdatesConfig> = {
         }
       );
     },
+
+    friendRequestSend: (result, _args, cache) => {
+      cache.updateQuery(
+        { query: graphql.FriendRequestsSentDocument },
+        (data: graphql.FriendRequestsSentQuery | null) => {
+          const castResult = result as graphql.FriendRequestSendMutation;
+          if (castResult.friendRequestSend) {
+            data?.me?.friendRequestsSent.unshift(castResult.friendRequestSend);
+          }
+          return data;
+        }
+      );
+    },
   },
 };
