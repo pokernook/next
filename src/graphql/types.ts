@@ -335,7 +335,7 @@ export type FriendshipsQuery = (
     & Pick<User, 'id'>
     & { friendships: Array<(
       { __typename?: 'Friendship' }
-      & Pick<Friendship, 'createdAt'>
+      & Pick<Friendship, 'id' | 'createdAt'>
       & { users: Array<(
         { __typename?: 'User' }
         & UserFieldsFragment
@@ -505,6 +505,7 @@ export const FriendshipsDocument = gql`
   me {
     id
     friendships {
+      id
       createdAt
       users {
         ...userFields

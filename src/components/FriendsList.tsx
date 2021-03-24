@@ -14,7 +14,9 @@ export const FriendsList: FC = () => {
       {data?.me?.friendships.map((friendship) =>
         friendship.users.map(
           (friend) =>
-            data.me?.id !== friend.id && <FriendsListItem user={friend} />
+            data.me?.id !== friend.id && (
+              <FriendsListItem key={friendship.id} user={friend} />
+            )
         )
       )}
     </>

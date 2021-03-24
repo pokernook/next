@@ -2,6 +2,7 @@ query friendships {
   me {
     id
     friendships {
+      id
       createdAt
       users {
         ...userFields
