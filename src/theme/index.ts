@@ -243,5 +243,14 @@ export const theme: Theme = {
         borderColor: "secondary",
       },
     },
+    select: {
+      p: 2,
+      borderColor: "border",
+      borderWidth: 2,
+      outline: "none",
+      ":active": {
+        borderColor: "secondary",
+      },
+    },
   },
 };
