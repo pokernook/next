@@ -168,6 +168,18 @@ export type UserStatus = {
   user?: Maybe<User>;
 };
 
+export type FriendRequestFieldsFragment = (
+  { __typename?: 'FriendRequest' }
+  & Pick<FriendRequest, 'id' | 'createdAt' | 'updatedAt' | 'status'>
+  & { from?: Maybe<(
+    { __typename?: 'User' }
+    & UserFieldsFragment
+  )>, to?: Maybe<(
+    { __typename?: 'User' }
+    & UserFieldsFragment
+  )> }
+);
+
 export type UserFieldsFragment = (
   { __typename?: 'User' }
   & Pick<User, 'id' | 'createdAt' | 'email' | 'emailVerified' | 'username' | 'discriminator'>
@@ -198,14 +210,7 @@ export type FriendRequestSendMutation = (
   { __typename?: 'Mutation' }
   & { friendRequestSend?: Maybe<(
     { __typename?: 'FriendRequest' }
-    & Pick<FriendRequest, 'createdAt' | 'id' | 'status' | 'updatedAt'>
-    & { from?: Maybe<(
-      { __typename?: 'User' }
-      & UserFieldsFragment
-    )>, to?: Maybe<(
-      { __typename?: 'User' }
-      & UserFieldsFragment
-    )> }
+    & FriendRequestFieldsFragment
   )> }
 );
 
@@ -335,14 +340,7 @@ export type FriendRequestsReceivedQuery = (
     & Pick<User, 'id'>
     & { friendRequestsReceived: Array<(
       { __typename?: 'FriendRequest' }
-      & Pick<FriendRequest, 'id' | 'createdAt' | 'status'>
-      & { from?: Maybe<(
-        { __typename?: 'User' }
-        & UserFieldsFragment
-      )>, to?: Maybe<(
-        { __typename?: 'User' }
-        & UserFieldsFragment
-      )> }
+      & FriendRequestFieldsFragment
     )> }
   )> }
 );
@@ -354,17 +352,9 @@ export type FriendRequestsSentQuery = (
   { __typename?: 'Query' }
   & { me?: Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'id'>
     & { friendRequestsSent: Array<(
       { __typename?: 'FriendRequest' }
-      & Pick<FriendRequest, 'id' | 'createdAt' | 'status'>
-      & { from?: Maybe<(
-        { __typename?: 'User' }
-        & UserFieldsFragment
-      )>, to?: Maybe<(
-        { __typename?: 'User' }
-        & UserFieldsFragment
-      )> }
+      & FriendRequestFieldsFragment
     )> }
   )> }
 );
@@ -414,6 +404,20 @@ export const UserFieldsFragmentDoc = gql`
   }
 }
     `;
+export const FriendRequestFieldsFragmentDoc = gql`
+    fragment friendRequestFields on FriendRequest {
+  id
+  createdAt
+  updatedAt
+  status
+  from {
+    ...userFields
+  }
+  to {
+    ...userFields
+  }
+}
+    ${UserFieldsFragmentDoc}`;
 export const DeleteAccountDocument = gql`
     mutation deleteAccount {
   userDeleteAccount {
@@ -428,19 +432,10 @@ export function useDeleteAccountMutation() {
 export const FriendRequestSendDocument = gql`
     mutation friendRequestSend($username: String!, $discriminator: Int!) {
   friendRequestSend(username: $username, discriminator: $discriminator) {
-    createdAt
-    from {
-      ...userFields
-    }
-    id
-    status
-    to {
-      ...userFields
-    }
-    updatedAt
+    ...friendRequestFields
   }
 }
-    ${UserFieldsFragmentDoc}`;
+    ${FriendRequestFieldsFragmentDoc}`;
 
 export function useFriendRequestSendMutation() {
   return Urql.useMutation<FriendRequestSendMutation, FriendRequestSendMutationVariables>(FriendRequestSendDocument);
@@ -549,19 +544,11 @@ export const FriendRequestsReceivedDocument = gql`
   me {
     id
     friendRequestsReceived {
-      id
-      createdAt
-      status
-      from {
-        ...userFields
-      }
-      to {
-        ...userFields
-      }
+      ...friendRequestFields
     }
   }
 }
-    ${UserFieldsFragmentDoc}`;
+    ${FriendRequestFieldsFragmentDoc}`;
 
 export function useFriendRequestsReceivedQuery(options: Omit<Urql.UseQueryArgs<FriendRequestsReceivedQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<FriendRequestsReceivedQuery>({ query: FriendRequestsReceivedDocument, ...options });
@@ -569,21 +556,12 @@ export function useFriendRequestsReceivedQuery(options: Omit<Urql.UseQueryArgs<F
 export const FriendRequestsSentDocument = gql`
     query friendRequestsSent {
   me {
-    id
     friendRequestsSent {
-      id
-      createdAt
-      status
-      from {
-        ...userFields
-      }
-      to {
-        ...userFields
-      }
+      ...friendRequestFields
     }
   }
 }
-    ${UserFieldsFragmentDoc}`;
+    ${FriendRequestFieldsFragmentDoc}`;
 
 export function useFriendRequestsSentQuery(options: Omit<Urql.UseQueryArgs<FriendRequestsSentQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<FriendRequestsSentQuery>({ query: FriendRequestsSentDocument, ...options });

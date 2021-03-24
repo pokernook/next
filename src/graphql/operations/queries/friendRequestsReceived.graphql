@@ -2,15 +2,7 @@ query friendRequestsReceived {
   me {
     id
     friendRequestsReceived {
-      id
-      createdAt
-      status
-      from {
-        ...userFields
-      }
-      to {
-        ...userFields
-      }
+      ...friendRequestFields
     }
   }
 }
