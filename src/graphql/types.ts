@@ -352,6 +352,7 @@ export type FriendRequestsSentQuery = (
   { __typename?: 'Query' }
   & { me?: Maybe<(
     { __typename?: 'User' }
+    & Pick<User, 'id'>
     & { friendRequestsSent: Array<(
       { __typename?: 'FriendRequest' }
       & FriendRequestFieldsFragment
@@ -556,6 +557,7 @@ export function useFriendRequestsReceivedQuery(options: Omit<Urql.UseQueryArgs<F
 export const FriendRequestsSentDocument = gql`
     query friendRequestsSent {
   me {
+    id
     friendRequestsSent {
       ...friendRequestFields
     }
