@@ -64,7 +64,7 @@ export const UserNavMenu: FC = () => {
             <MenuItem>
               <Avatar src={avatarSrc} sx={{ height: 40, width: 40, mr: 2 }} />
               <Heading as="h3">{user?.username}</Heading>
-              <Heading as="h3" sx={{ color: "textMuted", fontWeight: "body" }}>
+              <Heading as="h3" sx={{ color: "textMuted" }}>
                 {user?.discriminator}
               </Heading>
             </MenuItem>

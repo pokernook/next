@@ -8,6 +8,7 @@ import { useUser } from "../hooks/use-user";
 const sideNavRoutes: NavLinkProps[] = [
   { href: "/", children: "Home" },
   { href: "/friends", children: "Friends" },
+  { href: "/friends/pending", children: "Pending Friends" },
 ];
 
 export const SideNav: FC = () => {
@@ -19,7 +20,7 @@ export const SideNav: FC = () => {
       <Flex sx={{ alignItems: "center", mx: 3 }}>
         <Avatar src={avatarSrc} sx={{ height: 48, width: 48, mr: 2 }} />
         <Heading as="h3">{user?.username}</Heading>
-        <Heading as="h3" sx={{ color: "textMuted", fontWeight: "body" }}>
+        <Heading as="h3" sx={{ color: "textMuted" }}>
           {user?.discriminator}
         </Heading>
       </Flex>

@@ -41,7 +41,7 @@ const FriendsListItem: FC<FriendsListItemProps> = ({
         <Box>
           <Flex mb={2}>
             <Heading as="h3">{user.username}</Heading>
-            <Heading as="h3" sx={{ color: "textMuted", fontWeight: "body" }}>
+            <Heading as="h3" sx={{ color: "textMuted" }}>
               {user.discriminator}
             </Heading>
           </Flex>
