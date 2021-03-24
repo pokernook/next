@@ -325,6 +325,50 @@ export type UpdateUsernameMutation = (
   )> }
 );
 
+export type FriendRequestsReceivedQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FriendRequestsReceivedQuery = (
+  { __typename?: 'Query' }
+  & { me?: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+    & { friendRequestsReceived: Array<(
+      { __typename?: 'FriendRequest' }
+      & Pick<FriendRequest, 'id' | 'createdAt' | 'status'>
+      & { from?: Maybe<(
+        { __typename?: 'User' }
+        & UserFieldsFragment
+      )>, to?: Maybe<(
+        { __typename?: 'User' }
+        & UserFieldsFragment
+      )> }
+    )> }
+  )> }
+);
+
+export type FriendRequestsSentQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FriendRequestsSentQuery = (
+  { __typename?: 'Query' }
+  & { me?: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+    & { friendRequestsSent: Array<(
+      { __typename?: 'FriendRequest' }
+      & Pick<FriendRequest, 'id' | 'createdAt' | 'status'>
+      & { from?: Maybe<(
+        { __typename?: 'User' }
+        & UserFieldsFragment
+      )>, to?: Maybe<(
+        { __typename?: 'User' }
+        & UserFieldsFragment
+      )> }
+    )> }
+  )> }
+);
+
 export type FriendshipsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -499,6 +543,50 @@ export const UpdateUsernameDocument = gql`
 
 export function useUpdateUsernameMutation() {
   return Urql.useMutation<UpdateUsernameMutation, UpdateUsernameMutationVariables>(UpdateUsernameDocument);
+};
+export const FriendRequestsReceivedDocument = gql`
+    query friendRequestsReceived {
+  me {
+    id
+    friendRequestsReceived {
+      id
+      createdAt
+      status
+      from {
+        ...userFields
+      }
+      to {
+        ...userFields
+      }
+    }
+  }
+}
+    ${UserFieldsFragmentDoc}`;
+
+export function useFriendRequestsReceivedQuery(options: Omit<Urql.UseQueryArgs<FriendRequestsReceivedQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<FriendRequestsReceivedQuery>({ query: FriendRequestsReceivedDocument, ...options });
+};
+export const FriendRequestsSentDocument = gql`
+    query friendRequestsSent {
+  me {
+    id
+    friendRequestsSent {
+      id
+      createdAt
+      status
+      from {
+        ...userFields
+      }
+      to {
+        ...userFields
+      }
+    }
+  }
+}
+    ${UserFieldsFragmentDoc}`;
+
+export function useFriendRequestsSentQuery(options: Omit<Urql.UseQueryArgs<FriendRequestsSentQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<FriendRequestsSentQuery>({ query: FriendRequestsSentDocument, ...options });
 };
 export const FriendshipsDocument = gql`
     query friendships {

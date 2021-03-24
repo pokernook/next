@@ -1,0 +1,16 @@
+query friendRequestsSent {
+  me {
+    id
+    friendRequestsSent {
+      id
+      createdAt
+      status
+      from {
+        ...userFields
+      }
+      to {
+        ...userFields
+      }
+    }
+  }
+}
