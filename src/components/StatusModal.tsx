@@ -3,7 +3,7 @@ import "emoji-mart/css/emoji-mart.css";
 import { BaseEmoji, Picker } from "emoji-mart";
 import { FC, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Box, Button, Field, Text } from "theme-ui";
+import { Box, Button, Field, Text, useColorMode } from "theme-ui";
 
 import {
   StatusSetMutationVariables,
@@ -29,6 +29,7 @@ type FormData = StatusSetMutationVariables;
 
 export const StatusModal: FC<Props> = ({ onClose }: Props) => {
   const { user } = useUser();
+  const [colorMode] = useColorMode();
   const defaultEmoji = user?.status?.emoji || "💬";
   const [, clearStatus] = useStatusClearMutation();
   const [setStatusResult, setStatus] = useStatusSetMutation();
@@ -51,6 +52,9 @@ export const StatusModal: FC<Props> = ({ onClose }: Props) => {
       onClose();
     }
   });
+
+  const getEmojiPickerColorMode = (colorMode: string): "light" | "dark" =>
+    colorMode === "light" ? "light" : "dark";
 
   return (
     <ModalPortal onClose={onClose} hasDimmedBackground>
@@ -92,7 +96,7 @@ export const StatusModal: FC<Props> = ({ onClose }: Props) => {
                       title="Pick an emoji"
                       emoji="point_up"
                       native
-                      theme="dark"
+                      theme={getEmojiPickerColorMode(colorMode)}
                       onSelect={(emoji: BaseEmoji) => {
                         field.onChange(emoji.native);
                         setEmojiPickerOpen(false);
