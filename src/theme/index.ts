@@ -78,7 +78,7 @@ export const theme: Theme = {
       color: "text",
       textDecoration: "none",
       p: 2,
-      ":hover": {
+      ":hover,:focus": {
         color: "text",
         bg: alpha("secondary", 0.15),
         cursor: "pointer",
