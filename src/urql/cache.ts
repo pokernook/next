@@ -63,7 +63,7 @@ export const updates: Partial<UpdatesConfig> = {
         (data: graphql.FriendRequestsSentQuery | null) => {
           const castResult = result as graphql.FriendRequestSendMutation;
           if (castResult.friendRequestSend) {
-            data?.me?.friendRequestsSent.unshift(castResult.friendRequestSend);
+            data?.me?.friendRequestsSent.push(castResult.friendRequestSend);
           }
           return data;
         }
