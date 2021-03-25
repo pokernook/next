@@ -1,14 +1,15 @@
 import { FC, ReactNode } from "react";
 import { createPortal } from "react-dom";
+import { FiX } from "react-icons/fi";
 import {
   Box,
   BoxProps,
   Card,
   CardProps,
-  Close,
   Flex,
   FlexProps,
   Heading,
+  IconButton,
 } from "theme-ui";
 
 type ModalPortalProps = {
@@ -41,7 +42,13 @@ type ModalCloseProps = {
 export const ModalClose: FC<ModalCloseProps> = ({
   onClose,
 }: ModalCloseProps) => (
-  <Close onClick={onClose} sx={{ position: "absolute", top: 15, right: 15 }} />
+  <IconButton
+    variant="close"
+    sx={{ position: "absolute", top: 15, right: 15 }}
+    onClick={onClose}
+  >
+    <FiX size={24} />
+  </IconButton>
 );
 
 export const ModalHeader: FC = ({ children }: FlexProps) => (
