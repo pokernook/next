@@ -1,7 +1,7 @@
-query friendRequestsReceived($where: UserFriendRequestsReceivedWhereInput) {
+query friendRequestsReceived {
   me {
     id
-    friendRequestsReceived(where: $where) {
+    friendRequestsReceived(where: { status: { equals: PENDING } }) {
       ...friendRequestFields
     }
   }

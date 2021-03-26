@@ -407,9 +407,7 @@ export type UpdateUsernameMutation = (
   )> }
 );
 
-export type FriendRequestsReceivedQueryVariables = Exact<{
-  where?: Maybe<UserFriendRequestsReceivedWhereInput>;
-}>;
+export type FriendRequestsReceivedQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type FriendRequestsReceivedQuery = (
@@ -424,9 +422,7 @@ export type FriendRequestsReceivedQuery = (
   )> }
 );
 
-export type FriendRequestsSentQueryVariables = Exact<{
-  where?: Maybe<UserFriendRequestsSentWhereInput>;
-}>;
+export type FriendRequestsSentQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type FriendRequestsSentQuery = (
@@ -633,10 +629,10 @@ export function useUpdateUsernameMutation() {
   return Urql.useMutation<UpdateUsernameMutation, UpdateUsernameMutationVariables>(UpdateUsernameDocument);
 };
 export const FriendRequestsReceivedDocument = gql`
-    query friendRequestsReceived($where: UserFriendRequestsReceivedWhereInput) {
+    query friendRequestsReceived {
   me {
     id
-    friendRequestsReceived(where: $where) {
+    friendRequestsReceived(where: {status: {equals: PENDING}}) {
       ...friendRequestFields
     }
   }
@@ -647,10 +643,10 @@ export function useFriendRequestsReceivedQuery(options: Omit<Urql.UseQueryArgs<F
   return Urql.useQuery<FriendRequestsReceivedQuery>({ query: FriendRequestsReceivedDocument, ...options });
 };
 export const FriendRequestsSentDocument = gql`
-    query friendRequestsSent($where: UserFriendRequestsSentWhereInput) {
+    query friendRequestsSent {
   me {
     id
-    friendRequestsSent(where: $where) {
+    friendRequestsSent(where: {status: {equals: PENDING}}) {
       ...friendRequestFields
     }
   }
