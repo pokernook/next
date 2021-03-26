@@ -54,6 +54,7 @@ enum FriendRequestStatus {
   PENDING
   ACCEPTED
   REJECTED
+  CANCELLED
 }
 
 model Friendship {
