@@ -42,6 +42,7 @@ export type FriendRequest = {
 
 export enum FriendRequestStatus {
   Accepted = 'ACCEPTED',
+  Cancelled = 'CANCELLED',
   Pending = 'PENDING',
   Rejected = 'REJECTED'
 }
@@ -57,6 +58,7 @@ export type Friendship = {
 export type Mutation = {
   __typename?: 'Mutation';
   friendRequestAccept?: Maybe<FriendRequest>;
+  friendRequestCancel?: Maybe<FriendRequest>;
   friendRequestReject?: Maybe<FriendRequest>;
   friendRequestSend?: Maybe<FriendRequest>;
   friendshipDelete?: Maybe<Friendship>;
@@ -73,6 +75,11 @@ export type Mutation = {
 
 
 export type MutationFriendRequestAcceptArgs = {
+  friendRequestId: Scalars['String'];
+};
+
+
+export type MutationFriendRequestCancelArgs = {
   friendRequestId: Scalars['String'];
 };
 
@@ -197,6 +204,19 @@ export type DeleteAccountMutation = (
   & { userDeleteAccount?: Maybe<(
     { __typename?: 'User' }
     & UserFieldsFragment
+  )> }
+);
+
+export type FriendRequestCancelMutationVariables = Exact<{
+  friendRequestId: Scalars['String'];
+}>;
+
+
+export type FriendRequestCancelMutation = (
+  { __typename?: 'Mutation' }
+  & { friendRequestCancel?: Maybe<(
+    { __typename?: 'FriendRequest' }
+    & FriendRequestFieldsFragment
   )> }
 );
 
@@ -429,6 +449,17 @@ export const DeleteAccountDocument = gql`
 
 export function useDeleteAccountMutation() {
   return Urql.useMutation<DeleteAccountMutation, DeleteAccountMutationVariables>(DeleteAccountDocument);
+};
+export const FriendRequestCancelDocument = gql`
+    mutation friendRequestCancel($friendRequestId: String!) {
+  friendRequestCancel(friendRequestId: $friendRequestId) {
+    ...friendRequestFields
+  }
+}
+    ${FriendRequestFieldsFragmentDoc}`;
+
+export function useFriendRequestCancelMutation() {
+  return Urql.useMutation<FriendRequestCancelMutation, FriendRequestCancelMutationVariables>(FriendRequestCancelDocument);
 };
 export const FriendRequestSendDocument = gql`
     mutation friendRequestSend($username: String!, $discriminator: Int!) {
