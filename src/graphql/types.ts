@@ -27,6 +27,13 @@ export type Scalars = {
 
 
 
+export type EnumFriendRequestStatusFilter = {
+  equals?: Maybe<FriendRequestStatus>;
+  in?: Maybe<Array<FriendRequestStatus>>;
+  not?: Maybe<NestedEnumFriendRequestStatusFilter>;
+  notIn?: Maybe<Array<FriendRequestStatus>>;
+};
+
 export type FriendRequest = {
   __typename?: 'FriendRequest';
   createdAt: Scalars['DateTime'];
@@ -37,22 +44,12 @@ export type FriendRequest = {
   updatedAt: Scalars['DateTime'];
 };
 
-export type FriendRequestFromIdToIdCompoundUniqueInput = {
-  fromId: Scalars['String'];
-  toId: Scalars['String'];
-};
-
 export enum FriendRequestStatus {
   Accepted = 'ACCEPTED',
   Cancelled = 'CANCELLED',
   Pending = 'PENDING',
   Rejected = 'REJECTED'
 }
-
-export type FriendRequestWhereUniqueInput = {
-  fromId_toId?: Maybe<FriendRequestFromIdToIdCompoundUniqueInput>;
-  id?: Maybe<Scalars['String']>;
-};
 
 export type Friendship = {
   __typename?: 'Friendship';
@@ -152,6 +149,13 @@ export type MutationUserUpdateUsernameArgs = {
   newUsername: Scalars['String'];
 };
 
+export type NestedEnumFriendRequestStatusFilter = {
+  equals?: Maybe<FriendRequestStatus>;
+  in?: Maybe<Array<FriendRequestStatus>>;
+  not?: Maybe<NestedEnumFriendRequestStatusFilter>;
+  notIn?: Maybe<Array<FriendRequestStatus>>;
+};
+
 export type Query = {
   __typename?: 'Query';
   me?: Maybe<User>;
@@ -173,16 +177,12 @@ export type User = {
 
 
 export type UserFriendRequestsReceivedArgs = {
-  cursor?: Maybe<FriendRequestWhereUniqueInput>;
-  skip?: Maybe<Scalars['Int']>;
-  take?: Maybe<Scalars['Int']>;
+  where?: Maybe<UserFriendRequestsReceivedWhereInput>;
 };
 
 
 export type UserFriendRequestsSentArgs = {
-  cursor?: Maybe<FriendRequestWhereUniqueInput>;
-  skip?: Maybe<Scalars['Int']>;
-  take?: Maybe<Scalars['Int']>;
+  where?: Maybe<UserFriendRequestsSentWhereInput>;
 };
 
 
@@ -195,6 +195,14 @@ export type UserFriendshipsArgs = {
 export type UserAuthPayload = {
   __typename?: 'UserAuthPayload';
   user?: Maybe<User>;
+};
+
+export type UserFriendRequestsReceivedWhereInput = {
+  status?: Maybe<EnumFriendRequestStatusFilter>;
+};
+
+export type UserFriendRequestsSentWhereInput = {
+  status?: Maybe<EnumFriendRequestStatusFilter>;
 };
 
 export type UserLogOutPayload = {
@@ -624,7 +632,7 @@ export const FriendRequestsReceivedDocument = gql`
     query friendRequestsReceived {
   me {
     id
-    friendRequestsReceived {
+    friendRequestsReceived(where: {status: {equals: PENDING}}) {
       ...friendRequestFields
     }
   }
@@ -638,7 +646,7 @@ export const FriendRequestsSentDocument = gql`
     query friendRequestsSent {
   me {
     id
-    friendRequestsSent {
+    friendRequestsSent(where: {status: {equals: PENDING}}) {
       ...friendRequestFields
     }
   }

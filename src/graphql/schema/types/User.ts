@@ -21,8 +21,14 @@ export const UserObject = objectType({
     t.model.email();
     t.model.emailVerified();
     t.model.friendships();
-    t.model.friendRequestsReceived();
-    t.model.friendRequestsSent();
+    t.model.friendRequestsReceived({
+      filtering: { status: true },
+      pagination: false,
+    });
+    t.model.friendRequestsSent({
+      filtering: { status: true },
+      pagination: false,
+    });
     t.model.id();
     t.model.status();
     t.model.username();
