@@ -62,8 +62,25 @@ export const updates: Partial<UpdatesConfig> = {
         { query: graphql.FriendRequestsSentDocument },
         (data: graphql.FriendRequestsSentQuery | null) => {
           const castResult = result as graphql.FriendRequestSendMutation;
-          if (castResult.friendRequestSend) {
-            data?.me?.friendRequestsSent.push(castResult.friendRequestSend);
+          if (!castResult.friendRequestSend) {
+            return data;
+          }
+          data?.me?.friendRequestsSent.push(castResult.friendRequestSend);
+          return data;
+        }
+      );
+    },
+
+    friendRequestCancel: (result, _args, cache) => {
+      cache.updateQuery(
+        { query: graphql.FriendRequestsSentDocument },
+        (data: graphql.FriendRequestsSentQuery | null) => {
+          const castResult = result as graphql.FriendRequestCancelMutation;
+          if (data?.me) {
+            const cancelledIndex = data.me.friendRequestsSent.findIndex(
+              (f) => f.id === castResult.friendRequestCancel?.id
+            );
+            data.me.friendRequestsSent.splice(cancelledIndex, 1);
           }
           return data;
         }
