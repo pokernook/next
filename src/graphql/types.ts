@@ -17,14 +17,11 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
   DateTime: any;
   /** A field whose value conforms to the standard internet email address format as specified in RFC822: https://www.w3.org/Protocols/rfc822/. */
   EmailAddress: any;
   /** One emoji character */
   EmojiSingular: any;
-  /** The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
-  Json: any;
 };
 
 
@@ -33,11 +30,16 @@ export type Scalars = {
 export type FriendRequest = {
   __typename?: 'FriendRequest';
   createdAt: Scalars['DateTime'];
-  from?: Maybe<User>;
-  id: Scalars['ID'];
+  from: User;
+  id: Scalars['String'];
   status: FriendRequestStatus;
-  to?: Maybe<User>;
+  to: User;
   updatedAt: Scalars['DateTime'];
+};
+
+export type FriendRequestFromIdToIdCompoundUniqueInput = {
+  fromId: Scalars['String'];
+  toId: Scalars['String'];
 };
 
 export enum FriendRequestStatus {
@@ -47,13 +49,28 @@ export enum FriendRequestStatus {
   Rejected = 'REJECTED'
 }
 
+export type FriendRequestWhereUniqueInput = {
+  fromId_toId?: Maybe<FriendRequestFromIdToIdCompoundUniqueInput>;
+  id?: Maybe<Scalars['String']>;
+};
+
 export type Friendship = {
   __typename?: 'Friendship';
   createdAt: Scalars['DateTime'];
-  id: Scalars['ID'];
+  id: Scalars['String'];
   users: Array<User>;
 };
 
+
+export type FriendshipUsersArgs = {
+  cursor?: Maybe<UserWhereUniqueInput>;
+  skip?: Maybe<Scalars['Int']>;
+  take?: Maybe<Scalars['Int']>;
+};
+
+export type FriendshipWhereUniqueInput = {
+  id?: Maybe<Scalars['String']>;
+};
 
 export type Mutation = {
   __typename?: 'Mutation';
@@ -149,9 +166,30 @@ export type User = {
   friendRequestsReceived: Array<FriendRequest>;
   friendRequestsSent: Array<FriendRequest>;
   friendships: Array<Friendship>;
-  id: Scalars['ID'];
+  id: Scalars['String'];
   status?: Maybe<UserStatus>;
   username: Scalars['String'];
+};
+
+
+export type UserFriendRequestsReceivedArgs = {
+  cursor?: Maybe<FriendRequestWhereUniqueInput>;
+  skip?: Maybe<Scalars['Int']>;
+  take?: Maybe<Scalars['Int']>;
+};
+
+
+export type UserFriendRequestsSentArgs = {
+  cursor?: Maybe<FriendRequestWhereUniqueInput>;
+  skip?: Maybe<Scalars['Int']>;
+  take?: Maybe<Scalars['Int']>;
+};
+
+
+export type UserFriendshipsArgs = {
+  cursor?: Maybe<FriendshipWhereUniqueInput>;
+  skip?: Maybe<Scalars['Int']>;
+  take?: Maybe<Scalars['Int']>;
 };
 
 export type UserAuthPayload = {
@@ -169,22 +207,33 @@ export type UserStatus = {
   __typename?: 'UserStatus';
   createdAt: Scalars['DateTime'];
   emoji?: Maybe<Scalars['String']>;
-  id: Scalars['ID'];
+  id: Scalars['String'];
   message?: Maybe<Scalars['String']>;
   updatedAt: Scalars['DateTime'];
   user?: Maybe<User>;
 };
 
+export type UserTagCompoundUniqueInput = {
+  discriminator: Scalars['Int'];
+  username: Scalars['String'];
+};
+
+export type UserWhereUniqueInput = {
+  Tag?: Maybe<UserTagCompoundUniqueInput>;
+  email?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+};
+
 export type FriendRequestFieldsFragment = (
   { __typename?: 'FriendRequest' }
   & Pick<FriendRequest, 'id' | 'createdAt' | 'updatedAt' | 'status'>
-  & { from?: Maybe<(
+  & { from: (
     { __typename?: 'User' }
     & UserFieldsFragment
-  )>, to?: Maybe<(
+  ), to: (
     { __typename?: 'User' }
     & UserFieldsFragment
-  )> }
+  ) }
 );
 
 export type UserFieldsFragment = (
