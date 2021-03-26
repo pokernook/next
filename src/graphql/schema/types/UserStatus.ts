@@ -1,21 +1,16 @@
 import { arg, mutationField, objectType, stringArg } from "nexus";
-import { UserStatus } from "nexus-prisma";
 
 import { isAuthenticated } from "../rules";
 
 export const UserStatusObject = objectType({
-  name: UserStatus.$name,
+  name: "UserStatus",
   definition(t) {
-    t.field(UserStatus.createdAt.name, { type: UserStatus.createdAt.type });
-    t.field(UserStatus.emoji.name, { type: UserStatus.emoji.type });
-    t.field(UserStatus.id.name, { type: UserStatus.id.type });
-    t.field(UserStatus.message.name, { type: UserStatus.message.type });
-    t.field(UserStatus.updatedAt.name, { type: UserStatus.updatedAt.type });
-    t.field("user", {
-      type: "User",
-      resolve: (parent, _args, ctx) =>
-        ctx.prisma.userStatus.findUnique({ where: { id: parent.id } }).user(),
-    });
+    t.model.createdAt();
+    t.model.emoji();
+    t.model.id();
+    t.model.message();
+    t.model.updatedAt();
+    t.model.user();
   },
 });
 

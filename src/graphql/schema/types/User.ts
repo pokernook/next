@@ -9,44 +9,23 @@ import {
   queryField,
   stringArg,
 } from "nexus";
-import { User } from "nexus-prisma";
 import { promisify } from "util";
 
 import { isAuthenticated } from "../rules";
 
 export const UserObject = objectType({
-  name: User.$name,
+  name: "User",
   definition(t) {
-    t.field(User.createdAt.name, { type: User.createdAt.type });
-    t.field(User.discriminator.name, { type: User.discriminator.type });
-    t.field(User.email.name, { type: User.email.type });
-    t.field(User.emailVerified.name, { type: User.emailVerified.type });
-    t.nonNull.list.nonNull.field("friendships", {
-      type: "Friendship",
-      resolve: (parent, _args, ctx) =>
-        ctx.prisma.user.findUnique({ where: { id: parent.id } }).friendships(),
-    });
-    t.nonNull.list.nonNull.field("friendRequestsReceived", {
-      type: "FriendRequest",
-      resolve: (parent, _args, ctx) =>
-        ctx.prisma.user
-          .findUnique({ where: { id: parent.id } })
-          .friendRequestsReceived(),
-    });
-    t.nonNull.list.nonNull.field("friendRequestsSent", {
-      type: "FriendRequest",
-      resolve: (parent, _args, ctx) =>
-        ctx.prisma.user
-          .findUnique({ where: { id: parent.id } })
-          .friendRequestsSent(),
-    });
-    t.field(User.id.name, { type: User.id.type });
-    t.field("status", {
-      type: "UserStatus",
-      resolve: (parent, _args, ctx) =>
-        ctx.prisma.user.findUnique({ where: { id: parent.id } }).status(),
-    });
-    t.field(User.username.name, { type: User.username.type });
+    t.model.createdAt();
+    t.model.discriminator();
+    t.model.email();
+    t.model.emailVerified();
+    t.model.friendships();
+    t.model.friendRequestsReceived();
+    t.model.friendRequestsSent();
+    t.model.id();
+    t.model.status();
+    t.model.username();
   },
 });
 
