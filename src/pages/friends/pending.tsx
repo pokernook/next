@@ -9,6 +9,7 @@ import {
 } from "../../components/Friends";
 import {
   FriendRequestSendMutationVariables,
+  FriendRequestStatus,
   useFriendRequestSendMutation,
   useFriendRequestsReceivedQuery,
   useFriendRequestsSentQuery,
@@ -20,8 +21,12 @@ const PendingFriends: FC = () => {
     reset,
     handleSubmit,
   } = useForm<FriendRequestSendMutationVariables>();
-  const [friendRequestsSentQuery] = useFriendRequestsSentQuery();
-  const [friendRequestsReceivedQuery] = useFriendRequestsReceivedQuery();
+  const [friendRequestsSentQuery] = useFriendRequestsSentQuery({
+    variables: { where: { status: { equals: FriendRequestStatus.Pending } } },
+  });
+  const [friendRequestsReceivedQuery] = useFriendRequestsReceivedQuery({
+    variables: { where: { status: { equals: FriendRequestStatus.Pending } } },
+  });
   const [, sendFriendRequest] = useFriendRequestSendMutation();
 
   const { data: friendRequestsSent } = friendRequestsSentQuery;

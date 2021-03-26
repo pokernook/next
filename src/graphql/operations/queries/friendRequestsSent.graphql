@@ -1,7 +1,7 @@
-query friendRequestsSent {
+query friendRequestsSent($where: UserFriendRequestsSentWhereInput) {
   me {
     id
-    friendRequestsSent {
+    friendRequestsSent(where: $where) {
       ...friendRequestFields
     }
   }

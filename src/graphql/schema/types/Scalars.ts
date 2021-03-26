@@ -3,8 +3,6 @@ import { Kind } from "graphql";
 import { EmailAddressResolver } from "graphql-scalars";
 import { asNexusMethod, scalarType } from "nexus";
 
-export * as NexusPrismaScalars from "nexus-prisma/scalars";
-
 export const EmailAddress = asNexusMethod(
   EmailAddressResolver,
   "emailAddress",

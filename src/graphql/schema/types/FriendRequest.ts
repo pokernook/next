@@ -1,40 +1,16 @@
-import {
-  enumType,
-  intArg,
-  mutationField,
-  nonNull,
-  objectType,
-  stringArg,
-} from "nexus";
-import { FriendRequest, FriendRequestStatus } from "nexus-prisma";
+import { intArg, mutationField, nonNull, objectType, stringArg } from "nexus";
 
 import { isAuthenticated } from "../rules";
 
-export const FriendRequestStatusEnum = enumType(FriendRequestStatus);
-
 export const FriendRequestObject = objectType({
-  name: FriendRequest.$name,
+  name: "FriendRequest",
   definition(t) {
-    t.field(FriendRequest.createdAt.name, {
-      type: FriendRequest.createdAt.type,
-    });
-    t.field("from", {
-      type: "User",
-      resolve: (parent, _args, ctx) =>
-        ctx.prisma.friendRequest
-          .findUnique({ where: { id: parent.id } })
-          .from(),
-    });
-    t.field(FriendRequest.id.name, { type: FriendRequest.id.type });
-    t.field(FriendRequest.status.name, { type: FriendRequest.status.type });
-    t.field("to", {
-      type: "User",
-      resolve: (parent, _args, ctx) =>
-        ctx.prisma.friendRequest.findUnique({ where: { id: parent.id } }).to(),
-    });
-    t.field(FriendRequest.updatedAt.name, {
-      type: FriendRequest.updatedAt.type,
-    });
+    t.model.createdAt();
+    t.model.from();
+    t.model.id();
+    t.model.status();
+    t.model.to();
+    t.model.updatedAt();
   },
 });
 

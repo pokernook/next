@@ -1,18 +1,13 @@
 import { mutationField, nonNull, objectType, stringArg } from "nexus";
-import { Friendship } from "nexus-prisma";
 
 import { isAuthenticated } from "../rules";
 
 export const FriendshipObject = objectType({
-  name: Friendship.$name,
+  name: "Friendship",
   definition(t) {
-    t.field(Friendship.createdAt.name, { type: Friendship.createdAt.type });
-    t.field(Friendship.id.name, { type: Friendship.id.type });
-    t.nonNull.list.nonNull.field("users", {
-      type: "User",
-      resolve: (parent, _args, ctx) =>
-        ctx.prisma.friendship.findUnique({ where: { id: parent.id } }).users(),
-    });
+    t.model.createdAt();
+    t.model.id();
+    t.model.users();
   },
 });
 

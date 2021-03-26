@@ -17,26 +17,30 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
   DateTime: any;
   /** A field whose value conforms to the standard internet email address format as specified in RFC822: https://www.w3.org/Protocols/rfc822/. */
   EmailAddress: any;
   /** One emoji character */
   EmojiSingular: any;
-  /** The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
-  Json: any;
 };
 
 
 
 
+export type EnumFriendRequestStatusFilter = {
+  equals?: Maybe<FriendRequestStatus>;
+  in?: Maybe<Array<FriendRequestStatus>>;
+  not?: Maybe<NestedEnumFriendRequestStatusFilter>;
+  notIn?: Maybe<Array<FriendRequestStatus>>;
+};
+
 export type FriendRequest = {
   __typename?: 'FriendRequest';
   createdAt: Scalars['DateTime'];
-  from?: Maybe<User>;
-  id: Scalars['ID'];
+  from: User;
+  id: Scalars['String'];
   status: FriendRequestStatus;
-  to?: Maybe<User>;
+  to: User;
   updatedAt: Scalars['DateTime'];
 };
 
@@ -50,10 +54,20 @@ export enum FriendRequestStatus {
 export type Friendship = {
   __typename?: 'Friendship';
   createdAt: Scalars['DateTime'];
-  id: Scalars['ID'];
+  id: Scalars['String'];
   users: Array<User>;
 };
 
+
+export type FriendshipUsersArgs = {
+  cursor?: Maybe<UserWhereUniqueInput>;
+  skip?: Maybe<Scalars['Int']>;
+  take?: Maybe<Scalars['Int']>;
+};
+
+export type FriendshipWhereUniqueInput = {
+  id?: Maybe<Scalars['String']>;
+};
 
 export type Mutation = {
   __typename?: 'Mutation';
@@ -135,6 +149,13 @@ export type MutationUserUpdateUsernameArgs = {
   newUsername: Scalars['String'];
 };
 
+export type NestedEnumFriendRequestStatusFilter = {
+  equals?: Maybe<FriendRequestStatus>;
+  in?: Maybe<Array<FriendRequestStatus>>;
+  not?: Maybe<NestedEnumFriendRequestStatusFilter>;
+  notIn?: Maybe<Array<FriendRequestStatus>>;
+};
+
 export type Query = {
   __typename?: 'Query';
   me?: Maybe<User>;
@@ -149,14 +170,39 @@ export type User = {
   friendRequestsReceived: Array<FriendRequest>;
   friendRequestsSent: Array<FriendRequest>;
   friendships: Array<Friendship>;
-  id: Scalars['ID'];
+  id: Scalars['String'];
   status?: Maybe<UserStatus>;
   username: Scalars['String'];
+};
+
+
+export type UserFriendRequestsReceivedArgs = {
+  where?: Maybe<UserFriendRequestsReceivedWhereInput>;
+};
+
+
+export type UserFriendRequestsSentArgs = {
+  where?: Maybe<UserFriendRequestsSentWhereInput>;
+};
+
+
+export type UserFriendshipsArgs = {
+  cursor?: Maybe<FriendshipWhereUniqueInput>;
+  skip?: Maybe<Scalars['Int']>;
+  take?: Maybe<Scalars['Int']>;
 };
 
 export type UserAuthPayload = {
   __typename?: 'UserAuthPayload';
   user?: Maybe<User>;
+};
+
+export type UserFriendRequestsReceivedWhereInput = {
+  status?: Maybe<EnumFriendRequestStatusFilter>;
+};
+
+export type UserFriendRequestsSentWhereInput = {
+  status?: Maybe<EnumFriendRequestStatusFilter>;
 };
 
 export type UserLogOutPayload = {
@@ -169,22 +215,33 @@ export type UserStatus = {
   __typename?: 'UserStatus';
   createdAt: Scalars['DateTime'];
   emoji?: Maybe<Scalars['String']>;
-  id: Scalars['ID'];
+  id: Scalars['String'];
   message?: Maybe<Scalars['String']>;
   updatedAt: Scalars['DateTime'];
   user?: Maybe<User>;
 };
 
+export type UserTagCompoundUniqueInput = {
+  discriminator: Scalars['Int'];
+  username: Scalars['String'];
+};
+
+export type UserWhereUniqueInput = {
+  Tag?: Maybe<UserTagCompoundUniqueInput>;
+  email?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+};
+
 export type FriendRequestFieldsFragment = (
   { __typename?: 'FriendRequest' }
   & Pick<FriendRequest, 'id' | 'createdAt' | 'updatedAt' | 'status'>
-  & { from?: Maybe<(
+  & { from: (
     { __typename?: 'User' }
     & UserFieldsFragment
-  )>, to?: Maybe<(
+  ), to: (
     { __typename?: 'User' }
     & UserFieldsFragment
-  )> }
+  ) }
 );
 
 export type UserFieldsFragment = (
@@ -350,7 +407,9 @@ export type UpdateUsernameMutation = (
   )> }
 );
 
-export type FriendRequestsReceivedQueryVariables = Exact<{ [key: string]: never; }>;
+export type FriendRequestsReceivedQueryVariables = Exact<{
+  where?: Maybe<UserFriendRequestsReceivedWhereInput>;
+}>;
 
 
 export type FriendRequestsReceivedQuery = (
@@ -365,7 +424,9 @@ export type FriendRequestsReceivedQuery = (
   )> }
 );
 
-export type FriendRequestsSentQueryVariables = Exact<{ [key: string]: never; }>;
+export type FriendRequestsSentQueryVariables = Exact<{
+  where?: Maybe<UserFriendRequestsSentWhereInput>;
+}>;
 
 
 export type FriendRequestsSentQuery = (
@@ -572,10 +633,10 @@ export function useUpdateUsernameMutation() {
   return Urql.useMutation<UpdateUsernameMutation, UpdateUsernameMutationVariables>(UpdateUsernameDocument);
 };
 export const FriendRequestsReceivedDocument = gql`
-    query friendRequestsReceived {
+    query friendRequestsReceived($where: UserFriendRequestsReceivedWhereInput) {
   me {
     id
-    friendRequestsReceived {
+    friendRequestsReceived(where: $where) {
       ...friendRequestFields
     }
   }
@@ -586,10 +647,10 @@ export function useFriendRequestsReceivedQuery(options: Omit<Urql.UseQueryArgs<F
   return Urql.useQuery<FriendRequestsReceivedQuery>({ query: FriendRequestsReceivedDocument, ...options });
 };
 export const FriendRequestsSentDocument = gql`
-    query friendRequestsSent {
+    query friendRequestsSent($where: UserFriendRequestsSentWhereInput) {
   me {
     id
-    friendRequestsSent {
+    friendRequestsSent(where: $where) {
       ...friendRequestFields
     }
   }
