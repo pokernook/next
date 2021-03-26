@@ -117,8 +117,9 @@ export const friendRequestReject = mutationField("friendRequestReject", {
       rejectOnNotFound: true,
     });
     if (friendRequest.toId !== ctx.user.id) {
-      throw new Error("Could not reject friend request");
-    } else if (friendRequest.status === "ACCEPTED") {
+      throw new Error("Cannot reject a friend request that wasn't sent to you");
+    }
+    if (friendRequest.status === "ACCEPTED") {
       throw new Error("Cannot reject an accepted friend request");
     }
     const rejectedFriendRequest = ctx.prisma.friendRequest.update({
@@ -126,5 +127,33 @@ export const friendRequestReject = mutationField("friendRequestReject", {
       data: { status: "REJECTED" },
     });
     return rejectedFriendRequest;
+  },
+});
+
+export const friendRequestCancel = mutationField("friendRequestCancel", {
+  type: "FriendRequest",
+  shield: isAuthenticated(),
+  args: { friendRequestId: nonNull(stringArg()) },
+  resolve: async (_root, { friendRequestId }, ctx) => {
+    if (!ctx.user) {
+      return null;
+    }
+    const friendRequest = await ctx.prisma.friendRequest.findUnique({
+      where: { id: friendRequestId },
+      rejectOnNotFound: true,
+    });
+    if (friendRequest.fromId !== ctx.user.id) {
+      throw new Error("Cannot cancel a friend request you didn't send");
+    }
+    if (friendRequest.status != "PENDING") {
+      throw new Error(
+        "Cannot cancel a friend request that has been updated by the recipient"
+      );
+    }
+    const cancelledFriendRequest = ctx.prisma.friendRequest.update({
+      where: { id: friendRequestId },
+      data: { status: "CANCELLED" },
+    });
+    return cancelledFriendRequest;
   },
 });

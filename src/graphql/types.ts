@@ -42,6 +42,7 @@ export type FriendRequest = {
 
 export enum FriendRequestStatus {
   Accepted = 'ACCEPTED',
+  Cancelled = 'CANCELLED',
   Pending = 'PENDING',
   Rejected = 'REJECTED'
 }
@@ -57,6 +58,7 @@ export type Friendship = {
 export type Mutation = {
   __typename?: 'Mutation';
   friendRequestAccept?: Maybe<FriendRequest>;
+  friendRequestCancel?: Maybe<FriendRequest>;
   friendRequestReject?: Maybe<FriendRequest>;
   friendRequestSend?: Maybe<FriendRequest>;
   friendshipDelete?: Maybe<Friendship>;
@@ -73,6 +75,11 @@ export type Mutation = {
 
 
 export type MutationFriendRequestAcceptArgs = {
+  friendRequestId: Scalars['String'];
+};
+
+
+export type MutationFriendRequestCancelArgs = {
   friendRequestId: Scalars['String'];
 };
 
