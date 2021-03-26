@@ -9,7 +9,7 @@ import {
 } from "../../components/Friends";
 import {
   FriendRequestSendMutationVariables,
-  FriendRequestStatus,
+  useFriendRequestCancelMutation,
   useFriendRequestSendMutation,
   useFriendRequestsReceivedQuery,
   useFriendRequestsSentQuery,
@@ -21,13 +21,10 @@ const PendingFriends: FC = () => {
     reset,
     handleSubmit,
   } = useForm<FriendRequestSendMutationVariables>();
-  const [friendRequestsSentQuery] = useFriendRequestsSentQuery({
-    variables: { where: { status: { equals: FriendRequestStatus.Pending } } },
-  });
-  const [friendRequestsReceivedQuery] = useFriendRequestsReceivedQuery({
-    variables: { where: { status: { equals: FriendRequestStatus.Pending } } },
-  });
+  const [friendRequestsSentQuery] = useFriendRequestsSentQuery();
+  const [friendRequestsReceivedQuery] = useFriendRequestsReceivedQuery();
   const [, sendFriendRequest] = useFriendRequestSendMutation();
+  const [, cancelFriendRequest] = useFriendRequestCancelMutation();
 
   const { data: friendRequestsSent } = friendRequestsSentQuery;
   const { data: friendRequestsReceived } = friendRequestsReceivedQuery;
@@ -68,25 +65,31 @@ const PendingFriends: FC = () => {
           </Box>
 
           {friendRequestsReceived?.me?.friendRequestsReceived.map(
-            (friendRequest) => (
-              <Box key={friendRequest.id} my={2}>
-                <FriendRequestReceived
-                  onAccept={() => undefined}
-                  onReject={() => undefined}
-                  friendRequest={friendRequest}
-                />
-              </Box>
-            )
+            (friendRequest) =>
+              friendRequest.status === "PENDING" && (
+                <Box key={friendRequest.id} my={2}>
+                  <FriendRequestReceived
+                    onAccept={() => undefined}
+                    onReject={() => undefined}
+                    friendRequest={friendRequest}
+                  />
+                </Box>
+              )
           )}
 
-          {friendRequestsSent?.me?.friendRequestsSent.map((friendRequest) => (
-            <Box key={friendRequest.id} my={2}>
-              <FriendRequestSent
-                onCancel={() => undefined}
-                friendRequest={friendRequest}
-              />
-            </Box>
-          ))}
+          {friendRequestsSent?.me?.friendRequestsSent.map(
+            (friendRequest) =>
+              friendRequest.status === "PENDING" && (
+                <Box key={friendRequest.id} my={2}>
+                  <FriendRequestSent
+                    onCancel={() =>
+                      cancelFriendRequest({ friendRequestId: friendRequest.id })
+                    }
+                    friendRequest={friendRequest}
+                  />
+                </Box>
+              )
+          )}
         </Box>
       </Container>
     </DashboardLayout>
