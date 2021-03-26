@@ -66,7 +66,7 @@ export const FriendRequestSent: FC<SentProps> = ({
   friendRequest,
   onCancel,
 }: SentProps) => {
-  const sentAt = formatDistanceToNow(new Date(friendRequest.updatedAt), {
+  const sentAt = formatDistanceToNow(new Date(friendRequest.createdAt), {
     addSuffix: true,
   });
 
@@ -116,7 +116,7 @@ export const FriendRequestReceived: FC<ReceivedProps> = ({
   onAccept,
   onReject,
 }: ReceivedProps) => {
-  const receivedAt = formatDistanceToNow(new Date(friendRequest.updatedAt), {
+  const receivedAt = formatDistanceToNow(new Date(friendRequest.createdAt), {
     addSuffix: true,
   });
 
