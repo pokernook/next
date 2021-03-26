@@ -65,31 +65,27 @@ const PendingFriends: FC = () => {
           </Box>
 
           {friendRequestsReceived?.me?.friendRequestsReceived.map(
-            (friendRequest) =>
-              friendRequest.status === "PENDING" && (
-                <Box key={friendRequest.id} my={2}>
-                  <FriendRequestReceived
-                    onAccept={() => undefined}
-                    onReject={() => undefined}
-                    friendRequest={friendRequest}
-                  />
-                </Box>
-              )
+            (friendRequest) => (
+              <Box key={friendRequest.id} my={2}>
+                <FriendRequestReceived
+                  onAccept={() => undefined}
+                  onReject={() => undefined}
+                  friendRequest={friendRequest}
+                />
+              </Box>
+            )
           )}
 
-          {friendRequestsSent?.me?.friendRequestsSent.map(
-            (friendRequest) =>
-              friendRequest.status === "PENDING" && (
-                <Box key={friendRequest.id} my={2}>
-                  <FriendRequestSent
-                    onCancel={() =>
-                      cancelFriendRequest({ friendRequestId: friendRequest.id })
-                    }
-                    friendRequest={friendRequest}
-                  />
-                </Box>
-              )
-          )}
+          {friendRequestsSent?.me?.friendRequestsSent.map((friendRequest) => (
+            <Box key={friendRequest.id} my={2}>
+              <FriendRequestSent
+                onCancel={() =>
+                  cancelFriendRequest({ friendRequestId: friendRequest.id })
+                }
+                friendRequest={friendRequest}
+              />
+            </Box>
+          ))}
         </Box>
       </Container>
     </DashboardLayout>
