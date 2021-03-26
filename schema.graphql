@@ -26,6 +26,7 @@ type FriendRequest {
 
 enum FriendRequestStatus {
   ACCEPTED
+  CANCELLED
   PENDING
   REJECTED
 }
