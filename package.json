@@ -8,6 +8,7 @@
     "generate:nexus": "NODE_ENV=development ts-node --transpile-only --project tsconfig.nexus.json src/graphql/schema",
     "generate:graphql": "graphql-codegen",
     "watch:prisma": "chokidar \"prisma\" --initial --command \"prisma migrate dev --preview-feature && prisma db seed --preview-feature\"",
+    "watch:nexus": "ts-node-dev --project tsconfig.nexus.json --exit-child --respawn --transpile-only src/graphql/schema",
     "watch:graphql": "graphql-codegen --watch",
     "ts-node": "ts-node --project tsconfig.nexus.json",
     "typecheck": "tsc --noEmit",
@@ -79,6 +80,7 @@
     "prettier": "^2.2.1",
     "prisma": "2.18.0",
     "ts-node": "^9.1.1",
+    "ts-node-dev": "^1.1.6",
     "typescript": "^4.2.3"
   }
 }
