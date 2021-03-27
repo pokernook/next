@@ -98,5 +98,21 @@ export const updates: Partial<UpdatesConfig> = {
         }
       );
     },
+
+    friendRequestAccept: (result, _args, cache) => {
+      cache.updateQuery(
+        { query: graphql.FriendRequestsReceivedDocument },
+        (data: graphql.FriendRequestsReceivedQuery | null) => {
+          const castResult = result as graphql.FriendRequestAcceptMutation;
+          if (data?.me) {
+            const acceptedIndex = data.me.friendRequestsReceived.findIndex(
+              (f) => f.id === castResult.friendRequestAccept?.id
+            );
+            data.me.friendRequestsReceived.splice(acceptedIndex, 1);
+          }
+          return data;
+        }
+      );
+    },
   },
 };
