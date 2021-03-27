@@ -264,6 +264,19 @@ export type DeleteAccountMutation = (
   )> }
 );
 
+export type FriendRequestAcceptMutationVariables = Exact<{
+  friendRequestId: Scalars['String'];
+}>;
+
+
+export type FriendRequestAcceptMutation = (
+  { __typename?: 'Mutation' }
+  & { friendRequestAccept?: Maybe<(
+    { __typename?: 'FriendRequest' }
+    & FriendRequestFieldsFragment
+  )> }
+);
+
 export type FriendRequestCancelMutationVariables = Exact<{
   friendRequestId: Scalars['String'];
 }>;
@@ -519,6 +532,17 @@ export const DeleteAccountDocument = gql`
 
 export function useDeleteAccountMutation() {
   return Urql.useMutation<DeleteAccountMutation, DeleteAccountMutationVariables>(DeleteAccountDocument);
+};
+export const FriendRequestAcceptDocument = gql`
+    mutation friendRequestAccept($friendRequestId: String!) {
+  friendRequestAccept(friendRequestId: $friendRequestId) {
+    ...friendRequestFields
+  }
+}
+    ${FriendRequestFieldsFragmentDoc}`;
+
+export function useFriendRequestAcceptMutation() {
+  return Urql.useMutation<FriendRequestAcceptMutation, FriendRequestAcceptMutationVariables>(FriendRequestAcceptDocument);
 };
 export const FriendRequestCancelDocument = gql`
     mutation friendRequestCancel($friendRequestId: String!) {
