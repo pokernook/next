@@ -2,6 +2,8 @@ import { intArg, mutationField, nonNull, objectType, stringArg } from "nexus";
 
 import { isAuthenticated } from "../rules";
 
+// TODO: Block sending and accepting friend requests if users are already friends
+
 export const FriendRequestObject = objectType({
   name: "FriendRequest",
   definition(t) {
@@ -60,7 +62,7 @@ export const friendRequestAccept = mutationField("friendRequestAccept", {
       rejectOnNotFound: true,
     });
     if (friendRequest.toId !== ctx.user.id) {
-      throw new Error("Could not accept friend request");
+      throw new Error("Cannot accept a friend request that wasn't sent to you");
     }
     if (friendRequest.status !== "PENDING") {
       throw new Error("Cannot accept a friend that isn't pending");
