@@ -9,6 +9,7 @@ import {
 } from "../../components/Friends";
 import {
   FriendRequestSendMutationVariables,
+  useFriendRequestAcceptMutation,
   useFriendRequestCancelMutation,
   useFriendRequestRejectMutation,
   useFriendRequestSendMutation,
@@ -72,6 +73,7 @@ const PendingFriends: FC = () => {
 const ReceivedList = () => {
   const [friendRequestsReceivedQuery] = useFriendRequestsReceivedQuery();
   const [, rejectFriendRequest] = useFriendRequestRejectMutation();
+  const [, acceptFriendRequest] = useFriendRequestAcceptMutation();
 
   const { data: friendRequestsReceived } = friendRequestsReceivedQuery;
 
@@ -81,7 +83,9 @@ const ReceivedList = () => {
         (friendRequest) => (
           <Box key={friendRequest.id} my={2}>
             <FriendRequestReceived
-              onAccept={() => undefined}
+              onAccept={() =>
+                acceptFriendRequest({ friendRequestId: friendRequest.id })
+              }
               onReject={() =>
                 rejectFriendRequest({ friendRequestId: friendRequest.id })
               }
