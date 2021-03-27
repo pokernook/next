@@ -21,13 +21,7 @@ const PendingFriends: FC = () => {
     reset,
     handleSubmit,
   } = useForm<FriendRequestSendMutationVariables>();
-  const [friendRequestsSentQuery] = useFriendRequestsSentQuery();
-  const [friendRequestsReceivedQuery] = useFriendRequestsReceivedQuery();
   const [, sendFriendRequest] = useFriendRequestSendMutation();
-  const [, cancelFriendRequest] = useFriendRequestCancelMutation();
-
-  const { data: friendRequestsSent } = friendRequestsSentQuery;
-  const { data: friendRequestsReceived } = friendRequestsReceivedQuery;
 
   const onSubmit = handleSubmit(async (data) => {
     const result = await sendFriendRequest(data);
@@ -66,31 +60,55 @@ const PendingFriends: FC = () => {
             </Button>
           </Box>
 
-          {friendRequestsReceived?.me?.friendRequestsReceived.map(
-            (friendRequest) => (
-              <Box key={friendRequest.id} my={2}>
-                <FriendRequestReceived
-                  onAccept={() => undefined}
-                  onReject={() => undefined}
-                  friendRequest={friendRequest}
-                />
-              </Box>
-            )
-          )}
-
-          {friendRequestsSent?.me?.friendRequestsSent.map((friendRequest) => (
-            <Box key={friendRequest.id} my={2}>
-              <FriendRequestSent
-                onCancel={() =>
-                  cancelFriendRequest({ friendRequestId: friendRequest.id })
-                }
-                friendRequest={friendRequest}
-              />
-            </Box>
-          ))}
+          <ReceivedList />
+          <SentList />
         </Box>
       </Container>
     </DashboardLayout>
+  );
+};
+
+const ReceivedList = () => {
+  const [friendRequestsReceivedQuery] = useFriendRequestsReceivedQuery();
+
+  const { data: friendRequestsReceived } = friendRequestsReceivedQuery;
+
+  return (
+    <>
+      {friendRequestsReceived?.me?.friendRequestsReceived.map(
+        (friendRequest) => (
+          <Box key={friendRequest.id} my={2}>
+            <FriendRequestReceived
+              onAccept={() => undefined}
+              onReject={() => undefined}
+              friendRequest={friendRequest}
+            />
+          </Box>
+        )
+      )}
+    </>
+  );
+};
+
+const SentList = () => {
+  const [friendRequestsSentQuery] = useFriendRequestsSentQuery();
+  const [, cancelFriendRequest] = useFriendRequestCancelMutation();
+
+  const { data: friendRequestsSent } = friendRequestsSentQuery;
+
+  return (
+    <>
+      {friendRequestsSent?.me?.friendRequestsSent.map((friendRequest) => (
+        <Box key={friendRequest.id} my={2}>
+          <FriendRequestSent
+            onCancel={() =>
+              cancelFriendRequest({ friendRequestId: friendRequest.id })
+            }
+            friendRequest={friendRequest}
+          />
+        </Box>
+      ))}
+    </>
   );
 };
 
