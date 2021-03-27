@@ -37,13 +37,9 @@ export const updates: Partial<UpdatesConfig> = {
       );
     },
 
-    userLogOut: (_result, _args, cache) => {
-      cache.invalidate("Query", "me");
-    },
+    userLogOut: () => location.reload(),
 
-    userDeleteAccount: (_result, _args, cache) => {
-      cache.invalidate("Query", "me");
-    },
+    userDeleteAccount: () => location.reload(),
 
     userStatusClear: (_result, _args, cache) => {
       cache.updateQuery(
@@ -81,6 +77,22 @@ export const updates: Partial<UpdatesConfig> = {
               (f) => f.id === castResult.friendRequestCancel?.id
             );
             data.me.friendRequestsSent.splice(cancelledIndex, 1);
+          }
+          return data;
+        }
+      );
+    },
+
+    friendRequestReject: (result, _args, cache) => {
+      cache.updateQuery(
+        { query: graphql.FriendRequestsReceivedDocument },
+        (data: graphql.FriendRequestsReceivedQuery | null) => {
+          const castResult = result as graphql.FriendRequestRejectMutation;
+          if (data?.me) {
+            const rejectedIndex = data.me.friendRequestsReceived.findIndex(
+              (f) => f.id === castResult.friendRequestReject?.id
+            );
+            data.me.friendRequestsReceived.splice(rejectedIndex, 1);
           }
           return data;
         }
