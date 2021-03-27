@@ -9,7 +9,6 @@ import {
   FriendRequestSent,
 } from "../../components/Friends";
 import {
-  FriendRequestSendMutationVariables,
   useFriendRequestAcceptMutation,
   useFriendRequestCancelMutation,
   useFriendRequestRejectMutation,
@@ -17,18 +16,20 @@ import {
   useFriendRequestsReceivedQuery,
   useFriendRequestsSentQuery,
 } from "../../graphql/types";
+import { parseUserTag } from "../../utils/parse-user-tag";
+
+type FormData = {
+  tag: string;
+};
 
 const PendingFriends: FC = () => {
-  const {
-    register,
-    reset,
-    handleSubmit,
-  } = useForm<FriendRequestSendMutationVariables>();
+  const { register, reset, handleSubmit } = useForm<FormData>();
   const [, sendFriendRequest] = useFriendRequestSendMutation();
   const { addToast } = useToasts();
 
-  const onSubmit = handleSubmit(async (data) => {
-    const result = await sendFriendRequest(data);
+  const onSubmit = handleSubmit(async ({ tag }) => {
+    const userTag = parseUserTag(tag);
+    const result = await sendFriendRequest(userTag);
     result.error
       ? addToast(result.error.graphQLErrors[0]?.message, {
           appearance: "error",
@@ -46,19 +47,11 @@ const PendingFriends: FC = () => {
         <Divider mb={3} />
 
         <Box>
-          {/* TODO: tag should be enterable in one field */}
           <Box as="form" onSubmit={onSubmit} mb={3}>
             <Field
-              {...register("username", { required: true })}
-              label="Username"
-              mb={2}
-            />
-            <Field
-              {...register("discriminator", {
-                required: true,
-                valueAsNumber: true,
-              })}
-              label="Discriminator"
+              {...register("tag", { required: true, pattern: /^.+#\d{1,4}$/ })}
+              label="Add a friend with their PokerNook Tag"
+              placeholder="Enter a Username#0000"
               mb={2}
             />
             <Button type="submit" variant="secondary">
