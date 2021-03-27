@@ -2,7 +2,7 @@ import { intArg, mutationField, nonNull, objectType, stringArg } from "nexus";
 
 import { isAuthenticated } from "../rules";
 
-// TODO: Block sending and accepting friend requests if users are already friends
+// TODO: Block accepting friend requests if users are already friends
 
 export const FriendRequestObject = objectType({
   name: "FriendRequest",
@@ -27,22 +27,32 @@ export const friendRequestSend = mutationField("friendRequestSend", {
     if (!ctx.user) {
       return null;
     }
+    const from = ctx.user;
     const to = await ctx.prisma.user.findUnique({
       where: { Tag: { username, discriminator } },
       rejectOnNotFound: true,
     });
-    if (ctx.user.id === to.id) {
+    if (from.id === to.id) {
       throw new Error("You can't friend yourself");
     }
+    const friendship = await ctx.prisma.friendship.findFirst({
+      where: {
+        users: { some: { id: from.id } },
+        AND: { users: { some: { id: to.id } } },
+      },
+    });
+    if (friendship) {
+      throw new Error("You're already friends with that user");
+    }
     const existingFriendRequest = await ctx.prisma.friendRequest.findUnique({
-      where: { fromId_toId: { fromId: ctx.user.id, toId: to.id } },
+      where: { fromId_toId: { fromId: from.id, toId: to.id } },
     });
     if (existingFriendRequest?.status === "PENDING") {
       throw new Error("Cannot resend a friend request that is already pending");
     }
     const friendRequest = await ctx.prisma.friendRequest.upsert({
-      where: { fromId_toId: { fromId: ctx.user.id, toId: to.id } },
-      create: { fromId: ctx.user.id, toId: to.id },
+      where: { fromId_toId: { fromId: from.id, toId: to.id } },
+      create: { fromId: from.id, toId: to.id },
       update: { status: "PENDING" },
     });
     return friendRequest;
