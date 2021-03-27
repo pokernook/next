@@ -30,8 +30,10 @@ const PendingFriends: FC = () => {
   const { data: friendRequestsReceived } = friendRequestsReceivedQuery;
 
   const onSubmit = handleSubmit(async (data) => {
-    await sendFriendRequest(data);
-    reset();
+    const result = await sendFriendRequest(data);
+    if (!result.error) {
+      reset();
+    }
   });
 
   return (
