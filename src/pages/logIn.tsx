@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { FC } from "react";
 import { useForm } from "react-hook-form";
+import { useToasts } from "react-toast-notifications";
 import {
-  Alert,
   Box,
   Button,
   Card,
@@ -12,28 +12,24 @@ import {
   Text,
 } from "theme-ui";
 
-import { FadeIn } from "../components/Animated";
 import { AuthLayout } from "../components/AuthLayout";
 import { LogInMutationVariables, useLogInMutation } from "../graphql/types";
 
 const LogIn: FC = () => {
   const { register, handleSubmit } = useForm<LogInMutationVariables>();
   const [logInResult, logIn] = useLogInMutation();
+  const { addToast } = useToasts();
 
-  const onSubmit = handleSubmit((data) => logIn(data));
+  const onSubmit = handleSubmit(async (data) => {
+    const result = await logIn(data);
+    if (result.error) {
+      addToast(result.error.graphQLErrors[0]?.message, { appearance: "error" });
+    }
+  });
 
   return (
     <AuthLayout>
       <Heading mb={3}>Enter the &apos;Nook</Heading>
-
-      {logInResult.error && (
-        <FadeIn>
-          <Alert variant="error" mb={3}>
-            {logInResult.error.networkError?.message ||
-              logInResult.error.graphQLErrors[0]?.message}
-          </Alert>
-        </FadeIn>
-      )}
 
       <Card>
         <Box as="form" onSubmit={onSubmit}>

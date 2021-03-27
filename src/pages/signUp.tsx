@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { FC } from "react";
 import { useForm } from "react-hook-form";
+import { useToasts } from "react-toast-notifications";
 import {
-  Alert,
   Box,
   Button,
   Card,
@@ -12,28 +12,24 @@ import {
   Text,
 } from "theme-ui";
 
-import { FadeIn } from "../components/Animated";
 import { AuthLayout } from "../components/AuthLayout";
 import { SignUpMutationVariables, useSignUpMutation } from "../graphql/types";
 
 const SignUp: FC = () => {
   const { register, handleSubmit } = useForm<SignUpMutationVariables>();
   const [signUpResult, signUp] = useSignUpMutation();
+  const { addToast } = useToasts();
 
-  const onSubmit = handleSubmit((data) => signUp(data));
+  const onSubmit = handleSubmit(async (data) => {
+    const result = await signUp(data);
+    if (result.error) {
+      addToast(result.error.graphQLErrors[0]?.message, { appearance: "error" });
+    }
+  });
 
   return (
     <AuthLayout>
       <Heading mb={3}>Create your account</Heading>
-
-      {signUpResult.error && (
-        <FadeIn>
-          <Alert variant="error" mb={3}>
-            {signUpResult.error.networkError?.message ||
-              signUpResult.error.graphQLErrors[0]?.message}
-          </Alert>
-        </FadeIn>
-      )}
 
       <Card>
         <Box as="form" onSubmit={onSubmit}>
