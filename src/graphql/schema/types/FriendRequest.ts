@@ -41,7 +41,7 @@ export const friendRequestSend = mutationField("friendRequestSend", {
       );
     }
     const friendRequest = await ctx.prisma.friendRequest.upsert({
-      where: { id: existingFriendRequest.id },
+      where: { fromId_toId: { fromId: ctx.user.id, toId: to.id } },
       create: { fromId: ctx.user.id, toId: to.id },
       update: { status: "PENDING" },
     });
@@ -63,8 +63,9 @@ export const friendRequestAccept = mutationField("friendRequestAccept", {
     });
     if (friendRequest.toId !== ctx.user.id) {
       throw new Error("Could not accept friend request");
-    } else if (friendRequest.status === "ACCEPTED") {
-      return friendRequest;
+    }
+    if (friendRequest.status !== "PENDING") {
+      throw new Error("Cannot accept a friend that isn't pending");
     }
     const [acceptedFriendRequest] = await ctx.prisma.$transaction([
       ctx.prisma.friendRequest.update({
@@ -98,8 +99,8 @@ export const friendRequestReject = mutationField("friendRequestReject", {
     if (friendRequest.toId !== ctx.user.id) {
       throw new Error("Cannot reject a friend request that wasn't sent to you");
     }
-    if (friendRequest.status === "ACCEPTED") {
-      throw new Error("Cannot reject an accepted friend request");
+    if (friendRequest.status !== "PENDING") {
+      throw new Error("Cannot reject a friend request that isn't pending");
     }
     const rejectedFriendRequest = ctx.prisma.friendRequest.update({
       where: { id: friendRequestId },
@@ -124,10 +125,8 @@ export const friendRequestCancel = mutationField("friendRequestCancel", {
     if (friendRequest.fromId !== ctx.user.id) {
       throw new Error("Cannot cancel a friend request you didn't send");
     }
-    if (friendRequest.status != "PENDING") {
-      throw new Error(
-        "Cannot cancel a friend request that has been updated by the recipient"
-      );
+    if (friendRequest.status !== "PENDING") {
+      throw new Error("Cannot cancel a friend request that isn't pending");
     }
     const cancelledFriendRequest = ctx.prisma.friendRequest.update({
       where: { id: friendRequestId },
