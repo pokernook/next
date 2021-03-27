@@ -2,8 +2,6 @@ import { intArg, mutationField, nonNull, objectType, stringArg } from "nexus";
 
 import { isAuthenticated } from "../rules";
 
-// TODO: Block accepting friend requests if users are already friends
-
 export const FriendRequestObject = objectType({
   name: "FriendRequest",
   definition(t) {
