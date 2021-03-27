@@ -277,6 +277,19 @@ export type FriendRequestCancelMutation = (
   )> }
 );
 
+export type FriendRequestRejectMutationVariables = Exact<{
+  friendRequestId: Scalars['String'];
+}>;
+
+
+export type FriendRequestRejectMutation = (
+  { __typename?: 'Mutation' }
+  & { friendRequestReject?: Maybe<(
+    { __typename?: 'FriendRequest' }
+    & FriendRequestFieldsFragment
+  )> }
+);
+
 export type FriendRequestSendMutationVariables = Exact<{
   username: Scalars['String'];
   discriminator: Scalars['Int'];
@@ -517,6 +530,17 @@ export const FriendRequestCancelDocument = gql`
 
 export function useFriendRequestCancelMutation() {
   return Urql.useMutation<FriendRequestCancelMutation, FriendRequestCancelMutationVariables>(FriendRequestCancelDocument);
+};
+export const FriendRequestRejectDocument = gql`
+    mutation friendRequestReject($friendRequestId: String!) {
+  friendRequestReject(friendRequestId: $friendRequestId) {
+    ...friendRequestFields
+  }
+}
+    ${FriendRequestFieldsFragmentDoc}`;
+
+export function useFriendRequestRejectMutation() {
+  return Urql.useMutation<FriendRequestRejectMutation, FriendRequestRejectMutationVariables>(FriendRequestRejectDocument);
 };
 export const FriendRequestSendDocument = gql`
     mutation friendRequestSend($username: String!, $discriminator: Int!) {
