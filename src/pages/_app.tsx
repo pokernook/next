@@ -11,7 +11,7 @@ import { getClientConfig } from "../urql";
 const App = ({ Component, pageProps }: AppProps) => {
   return (
     <ThemeProvider theme={theme}>
-      <ToastProvider components={{ Toast }} autoDismiss placement="bottom-left">
+      <ToastProvider components={{ Toast }} autoDismiss placement="top-right">
         <Component {...pageProps} />
       </ToastProvider>
     </ThemeProvider>
