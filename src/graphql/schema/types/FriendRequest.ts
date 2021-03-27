@@ -77,6 +77,18 @@ export const friendRequestAccept = mutationField("friendRequestAccept", {
     if (friendRequest.status !== "PENDING") {
       throw new Error("Cannot accept a friend that isn't pending");
     }
+    const friendship = await ctx.prisma.friendship.findFirst({
+      where: {
+        users: { some: { id: friendRequest.fromId } },
+        AND: { users: { some: { id: friendRequest.toId } } },
+      },
+    });
+    if (friendship) {
+      return ctx.prisma.friendRequest.update({
+        where: { id: friendRequestId },
+        data: { status: "ACCEPTED" },
+      });
+    }
     const [acceptedFriendRequest] = await ctx.prisma.$transaction([
       ctx.prisma.friendRequest.update({
         where: { id: friendRequestId },
