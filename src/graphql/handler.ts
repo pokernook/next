@@ -47,11 +47,13 @@ const build = async () => {
     path: "/api/graphql",
     schema,
   });
-  await app.register(AltairFastify, {
-    baseURL: "/api/altair/",
-    endpointURL: "/api/graphql",
-    path: "/api/altair",
-  });
+  // Only enable Altair outside production
+  !IS_PRODUCTION &&
+    (await app.register(AltairFastify, {
+      baseURL: "/api/altair/",
+      endpointURL: "/api/graphql",
+      path: "/api/altair",
+    }));
 
   return app;
 };
