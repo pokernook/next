@@ -9,11 +9,13 @@ import {
 } from "../graphql/types";
 import { useAvatarSrc } from "../hooks/use-avatar-src";
 
-type ListItemProps = {
+type FlexContainerProps = {
   children: ReactNode;
 };
 
-const ListItem: FC<ListItemProps> = ({ children }: ListItemProps) => (
+const FlexContainer: FC<FlexContainerProps> = ({
+  children,
+}: FlexContainerProps) => (
   <Flex
     sx={{
       p: 3,
@@ -37,7 +39,7 @@ type FriendProps = {
 
 export const Friend: FC<FriendProps> = ({ friend }: FriendProps) => (
   <>
-    <ListItem>
+    <FlexContainer>
       <Avatar
         src={useAvatarSrc(friend)}
         sx={{ width: 48, height: 48, mr: 3 }}
@@ -53,7 +55,7 @@ export const Friend: FC<FriendProps> = ({ friend }: FriendProps) => (
         {friend.status &&
           `${friend.status.emoji || ""} ${friend.status.message || ""}`}
       </Box>
-    </ListItem>
+    </FlexContainer>
   </>
 );
 
@@ -72,7 +74,7 @@ export const FriendRequestSent: FC<SentProps> = ({
 
   return (
     <>
-      <ListItem>
+      <FlexContainer>
         <Avatar
           src={useAvatarSrc(friendRequest.to)}
           sx={{ width: 48, height: 48, mr: 3 }}
@@ -100,7 +102,7 @@ export const FriendRequestSent: FC<SentProps> = ({
             <FiX size={24} />
           </IconButton>
         </Flex>
-      </ListItem>
+      </FlexContainer>
     </>
   );
 };
@@ -122,7 +124,7 @@ export const FriendRequestReceived: FC<ReceivedProps> = ({
 
   return (
     <>
-      <ListItem>
+      <FlexContainer>
         <Avatar
           src={useAvatarSrc(friendRequest.from)}
           sx={{ width: 48, height: 48, mr: 3 }}
@@ -153,7 +155,7 @@ export const FriendRequestReceived: FC<ReceivedProps> = ({
             <FiX size={24} />
           </IconButton>
         </Flex>
-      </ListItem>
+      </FlexContainer>
     </>
   );
 };
