@@ -34,6 +34,7 @@ const LogIn: FC = () => {
       <Card>
         <Box as="form" onSubmit={onSubmit}>
           <Field
+            autoFocus
             label="Email"
             type="email"
             {...register("email", { required: true })}

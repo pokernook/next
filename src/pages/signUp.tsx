@@ -34,6 +34,7 @@ const SignUp: FC = () => {
       <Card>
         <Box as="form" onSubmit={onSubmit}>
           <Field
+            autoFocus
             label="Username"
             type="text"
             spellCheck={false}
