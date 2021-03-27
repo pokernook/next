@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { useForm } from "react-hook-form";
+import { useToasts } from "react-toast-notifications";
 import { Box, Button, Container, Divider, Field, Heading } from "theme-ui";
 
 import { DashboardLayout } from "../../components/DashboardLayout";
@@ -24,12 +25,15 @@ const PendingFriends: FC = () => {
     handleSubmit,
   } = useForm<FriendRequestSendMutationVariables>();
   const [, sendFriendRequest] = useFriendRequestSendMutation();
+  const { addToast } = useToasts();
 
   const onSubmit = handleSubmit(async (data) => {
     const result = await sendFriendRequest(data);
-    if (!result.error) {
-      reset();
-    }
+    result.error
+      ? addToast(result.error.graphQLErrors[0]?.message, {
+          appearance: "error",
+        })
+      : reset();
   });
 
   return (
