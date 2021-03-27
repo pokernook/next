@@ -1,9 +1,13 @@
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 
 import { FadeIn } from "./Animated";
 
-export const Toast: FC = () => (
+type ToastProps = {
+  children: ReactNode;
+};
+
+export const Toast: FC<ToastProps> = ({ children }: ToastProps) => (
   <FadeIn>
-    <div></div>
+    <div>{children}</div>
   </FadeIn>
 );
