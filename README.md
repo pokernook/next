@@ -27,10 +27,6 @@ npm run lint # Lint the project
 
 npm run typecheck # Type-check the project
 
-npm run generate:prisma # Generate Prisma client
-
-npm run generate:nexus # Generate Nexus schema types
-
 npm run build # Build application for deployment
 ```
 
