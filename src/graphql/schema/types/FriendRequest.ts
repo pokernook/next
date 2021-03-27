@@ -32,6 +32,12 @@ export const friendRequestSend = mutationField("friendRequestSend", {
     if (ctx.user.id === to.id) {
       throw new Error("You can't friend yourself");
     }
+    const existingFriendRequest = await ctx.prisma.friendRequest.findUnique({
+      where: { fromId_toId: { fromId: ctx.user.id, toId: to.id } },
+    });
+    if (existingFriendRequest?.status === "PENDING") {
+      throw new Error("Cannot resend a friend request that is already pending");
+    }
     const friendRequest = await ctx.prisma.friendRequest.upsert({
       where: { fromId_toId: { fromId: ctx.user.id, toId: to.id } },
       create: { fromId: ctx.user.id, toId: to.id },
