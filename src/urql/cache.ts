@@ -113,6 +113,7 @@ export const updates: Partial<UpdatesConfig> = {
           return data;
         }
       );
+      cache.invalidate("Query", "friendships");
     },
   },
 };
