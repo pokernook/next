@@ -1,6 +1,6 @@
 import { formatDistanceToNow } from "date-fns";
 import { FC, ReactNode } from "react";
-import { FiCheck, FiX } from "react-icons/fi";
+import { FiCheck, FiMoreVertical, FiX } from "react-icons/fi";
 import { Avatar, Box, Flex, Heading, IconButton, Text } from "theme-ui";
 
 import {
@@ -55,6 +55,12 @@ export const Friend: FC<FriendProps> = ({ friend }: FriendProps) => (
         {friend.status &&
           `${friend.status.emoji || ""} ${friend.status.message || ""}`}
       </Box>
+
+      <Flex sx={{ alignItems: "center", justifyContent: "flex-end", flex: 1 }}>
+        <IconButton variant="close">
+          <FiMoreVertical size={24} />
+        </IconButton>
+      </Flex>
     </FlexContainer>
   </>
 );
