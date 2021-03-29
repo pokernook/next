@@ -14,7 +14,7 @@ type DashboardLayoutProps = {
 export const DashboardLayout: FC<DashboardLayoutProps> = ({
   children,
 }: DashboardLayoutProps) => {
-  const { fetching, user } = useUser({ redirectTo: "/logIn" });
+  const { fetching, user } = useUser({ hrefIfAbsent: "/logIn" });
 
   if (fetching || !user) {
     return <Loading />;

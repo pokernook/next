@@ -13,10 +13,7 @@ type AuthLayoutProps = {
 export const AuthLayout: FC<AuthLayoutProps> = ({
   children,
 }: AuthLayoutProps) => {
-  const { fetching } = useUser({
-    redirectTo: "/",
-    redirectIfFound: true,
-  });
+  const { fetching } = useUser({ hrefIfFound: "/" });
 
   if (fetching) {
     return <Loading />;

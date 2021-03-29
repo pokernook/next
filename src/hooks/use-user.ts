@@ -4,8 +4,8 @@ import { useEffect } from "react";
 import { useMeQuery, UserFieldsFragment } from "../graphql/types";
 
 type UseUserArgs = {
-  redirectTo?: string;
-  redirectIfFound?: boolean;
+  hrefIfAbsent?: string;
+  hrefIfFound?: string;
 };
 
 type UseUserReturn = {
@@ -14,22 +14,25 @@ type UseUserReturn = {
 };
 
 export const useUser = ({
-  redirectTo = "",
-  redirectIfFound = false,
+  hrefIfAbsent = "",
+  hrefIfFound = "",
 }: UseUserArgs = {}): UseUserReturn => {
   const router = useRouter();
   const [meQuery] = useMeQuery();
   const { data, fetching } = meQuery;
 
   useEffect(() => {
-    if (!redirectTo || fetching) {
+    if (fetching) {
       return;
     }
 
-    if ((!redirectIfFound && !data?.me) || (redirectIfFound && data?.me)) {
-      void router.push(redirectTo);
+    if (!data?.me && hrefIfAbsent) {
+      return void router.push(hrefIfAbsent);
     }
-  }, [data?.me, fetching, redirectIfFound, redirectTo, router]);
+    if (data?.me && hrefIfFound) {
+      return void router.push(hrefIfFound);
+    }
+  }, [hrefIfAbsent, hrefIfFound, data?.me, fetching, router]);
 
   return { user: data?.me, fetching };
 };
