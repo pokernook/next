@@ -6,7 +6,7 @@ import { useAvatarSrc } from "../hooks/use-avatar-src";
 import { useUser } from "../hooks/use-user";
 
 const sideNavRoutes: NavLinkProps[] = [
-  { href: "/", children: "Home" },
+  { href: "/", children: "Play" },
   { href: "/friends", children: "Friends" },
   { href: "/friends/pending", children: "Pending Friends" },
 ];
