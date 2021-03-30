@@ -61,9 +61,9 @@ const settingsNavRoutes: NavLinkProps[] = [
 
 const SettingsNav = () => (
   <>
-    {settingsNavRoutes.map((routeProps, idx) => (
+    {settingsNavRoutes.map((props, idx) => (
       <Box key={idx} my={1}>
-        <NavLink {...routeProps} sx={{ variant: "links.nav" }} />
+        <NavLink {...props} sx={{ variant: "links.nav" }} />
       </Box>
     ))}
   </>
