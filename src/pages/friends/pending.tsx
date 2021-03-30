@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { useForm } from "react-hook-form";
 import { useToasts } from "react-toast-notifications";
-import { Box, Button, Field } from "theme-ui";
+import { Box, Button, Grid, Input, Label } from "theme-ui";
 
 import { DashboardLayout } from "../../components/DashboardLayout";
 import {
@@ -42,15 +42,17 @@ const PendingFriends: FC = () => {
     <DashboardLayout>
       <FriendsLayout>
         <Box as="form" onSubmit={onSubmit} mb={3}>
-          <Field
-            {...register("tag", { required: true, pattern: /^.+#\d{1,4}$/ })}
-            label="Add a friend with their PokerNook Tag"
-            placeholder="Enter a Username#0000"
-            mb={2}
-          />
-          <Button type="submit" variant="secondary">
-            Add friend
-          </Button>
+          <Label>Add a friend with their PokerNook Tag</Label>
+          <Grid columns={["4fr 1fr"]} sx={{ alignItems: "center" }}>
+            <Input
+              {...register("tag", { required: true, pattern: /^.+#\d{1,4}$/ })}
+              placeholder="Enter a Username#0000"
+            />
+
+            <Button type="submit" variant="secondary">
+              Add friend
+            </Button>
+          </Grid>
         </Box>
 
         <ReceivedList />
