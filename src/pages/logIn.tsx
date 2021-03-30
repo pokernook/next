@@ -29,7 +29,9 @@ const LogIn: FC = () => {
 
   return (
     <AuthLayout>
-      <Heading mb={3}>Enter the &apos;Nook</Heading>
+      <Heading as="h2" mb={3}>
+        Enter the &apos;Nook
+      </Heading>
 
       <Card>
         <Box as="form" onSubmit={onSubmit}>

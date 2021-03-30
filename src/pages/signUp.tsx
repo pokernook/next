@@ -29,7 +29,9 @@ const SignUp: FC = () => {
 
   return (
     <AuthLayout>
-      <Heading mb={3}>Create your account</Heading>
+      <Heading as="h2" mb={3}>
+        Create your account
+      </Heading>
 
       <Card>
         <Box as="form" onSubmit={onSubmit}>
