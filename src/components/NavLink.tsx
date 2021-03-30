@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { pathToRegexp } from "path-to-regexp";
 import { FC, ReactNode } from "react";
 import { NavLink as TNavLink, ThemeUIStyleObject } from "theme-ui";
 
 export type NavLinkProps = {
   activeClassName?: string;
   children: ReactNode;
+  exact?: boolean;
   href: string;
   sx?: ThemeUIStyleObject;
 };
@@ -13,11 +15,14 @@ export type NavLinkProps = {
 export const NavLink: FC<NavLinkProps> = ({
   activeClassName = "active",
   children,
+  exact = true,
   href,
   ...props
 }: NavLinkProps) => {
-  const router = useRouter();
-  const isActive = router.pathname === href || router.asPath === href;
+  const { asPath } = useRouter();
+  const isActive = pathToRegexp(href, [], { sensitive: true, end: exact }).test(
+    asPath
+  );
   const className = isActive ? activeClassName : "";
 
   return (
