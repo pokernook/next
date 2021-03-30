@@ -1,13 +1,14 @@
 import { FC } from "react";
 import { useForm } from "react-hook-form";
 import { useToasts } from "react-toast-notifications";
-import { Box, Button, Container, Divider, Field, Heading } from "theme-ui";
+import { Box, Button, Field } from "theme-ui";
 
 import { DashboardLayout } from "../../components/DashboardLayout";
 import {
   FriendRequestReceived,
   FriendRequestSent,
 } from "../../components/Friends";
+import { FriendsLayout } from "../../components/FriendsLayout";
 import {
   useFriendRequestAcceptMutation,
   useFriendRequestCancelMutation,
@@ -39,30 +40,22 @@ const PendingFriends: FC = () => {
 
   return (
     <DashboardLayout>
-      <Container sx={{ maxWidth: 900, pt: 20 }}>
-        <Heading as="h1" mb={3}>
-          Pending Friends
-        </Heading>
-
-        <Divider mb={3} />
-
-        <Box>
-          <Box as="form" onSubmit={onSubmit} mb={3}>
-            <Field
-              {...register("tag", { required: true, pattern: /^.+#\d{1,4}$/ })}
-              label="Add a friend with their PokerNook Tag"
-              placeholder="Enter a Username#0000"
-              mb={2}
-            />
-            <Button type="submit" variant="secondary">
-              Add friend
-            </Button>
-          </Box>
-
-          <ReceivedList />
-          <SentList />
+      <FriendsLayout>
+        <Box as="form" onSubmit={onSubmit} mb={3}>
+          <Field
+            {...register("tag", { required: true, pattern: /^.+#\d{1,4}$/ })}
+            label="Add a friend with their PokerNook Tag"
+            placeholder="Enter a Username#0000"
+            mb={2}
+          />
+          <Button type="submit" variant="secondary">
+            Add friend
+          </Button>
         </Box>
-      </Container>
+
+        <ReceivedList />
+        <SentList />
+      </FriendsLayout>
     </DashboardLayout>
   );
 };
