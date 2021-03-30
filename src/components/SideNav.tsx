@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { FiPlayCircle, FiUserPlus, FiUsers } from "react-icons/fi";
+import { FiPlayCircle, FiUsers } from "react-icons/fi";
 import { Avatar, Box, Divider, Flex, Heading } from "theme-ui";
 
 import { NavLink, NavLinkProps } from "../components/NavLink";
@@ -8,8 +8,7 @@ import { useUser } from "../hooks/use-user";
 
 const sideNavRoutes: NavLinkProps[] = [
   { children: "Play", href: "/", Icon: FiPlayCircle },
-  { children: "Friends", href: "/friends", Icon: FiUsers },
-  { children: "Pending Friends", href: "/friends/pending", Icon: FiUserPlus },
+  { children: "Friends", exact: false, href: "/friends", Icon: FiUsers },
 ];
 
 export const SideNav: FC = () => {
