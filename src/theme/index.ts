@@ -75,7 +75,8 @@ export const theme: Theme = {
   },
   links: {
     nav: {
-      display: "block",
+      display: "flex",
+      alignItems: "center",
       borderRadius: 4,
       color: "text",
       textDecoration: "none",
